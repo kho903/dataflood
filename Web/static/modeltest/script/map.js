@@ -99,7 +99,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
         var circles = map.selectAll("circle")
             .data(_spots).enter()
             .append("circle")
-            .attr("c5lass", "spot")
+            .attr("class", "spot")
             .attr("cx", function (d, i) {
                 return [
                     100, 130, 160, 190, 220, 250,
