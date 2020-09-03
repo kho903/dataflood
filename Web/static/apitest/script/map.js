@@ -103,13 +103,30 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .attr("cy", function (d) {
                 return [230];
             })
-            .attr("r", "10px")
+            .attr("r", "20px")
             .attr("fill", function (d, i) {
                 return ["brown", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(109,177,0)"][i]
             })
             .on('click', spot_clicked_event)
             .transition()
             .ease(d3.easeElastic);
+
+        map.selectAll('text')
+        .append('circle')
+        .data(_spots).enter()
+        .append('text')
+        .attr('dx', function(d,i){
+            return[100,130,160,190][i]-3;
+        })
+        .attr('dy',function(d,i){
+            return[230,230,230,230][i];
+        })
+        .attr("class", "spot")
+            .style('fill', 'white')
+            .style('font-size', '12px')
+            .text(function (d, i) {
+                return str(i);
+            });
     }
 
     function spot_clicked_event(d, p) {
@@ -119,22 +136,22 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             case 0:
                 color = d3.scaleLinear()
                     .domain([0, 100])
-                    .range(["rgb(255, 255, 255)", "rgb(0, 0, 255)"]);
+                    .range(["#f2dfd3", "#964b00"]);
                 break;
             case 1:
                 color = d3.scaleLinear()
                     .domain([0, 100])
-                    .range(["rgb(255, 255, 255)", "rgb(20, 10, 255)"]);
+                    .range(["rgb(184, 237, 255)", "rgb(0, 99, 132)"]);
                 break;
             case 2:
                 color = d3.scaleLinear()
                     .domain([0, 100])
-                    .range(["rgb(255, 255, 255)", "rgb(50, 30, 255)"]);
+                    .range(["rgb(250, 219, 255)", "rgb(77, 11, 88)"]);
                 break;
             case 3:
                 color = d3.scaleLinear()
                     .domain([0, 100])
-                    .range(["rgb(255, 255, 255)", "rgb(60, 80, 255)"]);
+                    .range(["rgb(241,255,200)", "rgb(109,177,0)"]);
                 break;
         }
         a = document.getElementById('title'); 
@@ -148,19 +165,19 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
                 switch (p) {
                     case 0:
                         each_level = dict_0[d.properties.EMD_KOR_NM] * 100;
-                        a.innerHTML = year +'년'+month+'월' + day + '일' + hour + " : " + minute + "기준 데이터"
+                        a.innerHTML = year +' 년 '+month+ ' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 데이터"
                         break;
                     case 1:
                         each_level = dict_1[d.properties.EMD_KOR_NM] * 100;
-                        a.innerHTML = year +'년'+month+'월' + day + '일' + hour + " : " + minute + "기준 +1시간 데이터"
+                        a.innerHTML = year +' 년 '+month+' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +1시간 데이터"
                         break;
                     case 2:
                         each_level = dict_2[d.properties.EMD_KOR_NM] * 100;
-                        a.innerHTML = year +'년'+month+'월' + day + '일' + hour + " : " + minute + "기준 +2시간 데이터"
+                        a.innerHTML = year +' 년 '+month+' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +2시간 데이터"
                         break;
                     case 3:
                         each_level = dict_3[d.properties.EMD_KOR_NM] * 100;
-                        a.innerHTML = year +'년'+month+'월' + day + '일' + hour + " : " + minute + "기준 +3시간 데이터"
+                        a.innerHTML = year +' 년 '+month+' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +3시간 데이터"
                         break;
                 }
                 return "fill: " + color(Math.ceil(each_level));

@@ -131,4 +131,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 # STATICFILES_DIRS = ( ('map', os.path.join( BASE_DIR, 'static')),)

@@ -170,6 +170,14 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                 each_level = dict_predict[p][d.properties.EMD_KOR_NM] * 100;
                 return "fill: " + color(Math.ceil(each_level));
             })
+        str = '2020년 7월 23일 ' + p + '시';
+        if (p > 23){
+            date = '2020년 7월 24일';
+            time = p-24;
+            str = date + time + '시';
+        }
+        a = document.getElementById('title');
+        a.innerHTML = str
     }
 
     // 클릭시 확대 이벤트

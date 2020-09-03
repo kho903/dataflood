@@ -30,7 +30,7 @@ g.tooltip {
     display: none;
 }
 
-h1 {
+#title {
     position:absolute;
     top:90%;
     left:40%;
@@ -38,4 +38,25 @@ h1 {
 td{
     width: 150px;
     height: 50px;
+}
+
+#cam1 {
+    position:absolute;
+    top:8%;
+    left:18%;
+}
+#cam2{
+    position:absolute;
+    top:8%;
+    left:74%;
+}
+#cam3{
+    position:absolute;
+    top:55%;
+    left:18%;
+}
+#cam4{
+    position:absolute;
+    top:55%;
+    left:74%;
 }
