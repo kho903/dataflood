@@ -74,21 +74,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             // each_level = dict_**[d.properties.EMD_KOR_NM] 뒤에 수치를 곱하여 [0, 100]단위로 임의 정규화
 
             ;
-
-            map.selectAll("text")
-                .data(features)
-                .enter().append("text")
-                .attr("transform", function (d) {
-                    return "translate(" + path.centroid(d) + ")";
-                })
-                .attr("dy", ".35em")
-                .attr("class", "municipality-label")
-            // 지도에 모든 동 이름을 표시 (동이 너무 많아 복잡)
-            // .text(function (d) {
-            //     return d.properties.EMD_KOR_NM;
-            // })
-            ;
-
             callback();
         });
     }
@@ -102,23 +87,66 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             .attr("class", "spot")
             .attr("cx", function (d, i) {
                 return [
-                    100, 130, 160, 190, 220, 250,
-                    280, 310, 340, 370, 400, 430,
-                    460, 490, 520, 550, 580, 610,
-                    640, 670, 700, 730, 760, 790,
-                    820, 850, 880, 910
+                    100, 145, 190, 235, 280, 325,
+                    370, 415, 460, 505, 550, 595,
+                    640, 685, 730, 775, 820, 865,
+                    910, 955, 1000, 1045, 1090, 1135,
+                    100, 145, 190, 235
                 ][i];
             })
-            .attr("cy", function (d) {
-                return [230];
+            .attr("cy", function (d, i) {
+                return [
+                    230, 230, 230, 230, 230, 230,
+                    230, 230, 230, 230, 230, 230,
+                    230, 230, 230, 230, 230, 230,
+                    230, 230, 230, 230, 230, 230,
+                    280, 280, 280, 280
+                ][i];
             })
-            .attr("r", "10px")
+            .attr("r", "20px")
             .attr("fill", function (d, i) {
-                return ["brown", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(109,177,0)", 'rgb(000,111,999)'][i]
+                if(i===22 || i===23)
+                    return "red"
             })
             .on('click', spot_clicked_event)
             .transition()
             .ease(d3.easeElastic);
+
+        map.selectAll("text")
+            .append("circle")
+            .data(_spots).enter()
+            .append("text")
+            .attr("dx", function (d, i) {
+                return [
+                    90, 145, 190, 235, 280, 325,
+                    370, 415, 460, 505, 550, 595,
+                    640, 685, 730, 775, 820, 865,
+                    910, 955, 1000, 1045, 1090, 1135,
+                    90, 145, 190, 235
+                ][i] - 3;
+            })
+            .attr("dy", function (d, i) {
+                return [
+                    230, 230, 230, 230, 230, 230,
+                    230, 230, 230, 230, 230, 230,
+                    230, 230, 230, 230, 230, 230,
+                    230, 230, 230, 230, 230, 230,
+                    280, 280, 280, 280
+                ][i];
+            })
+            .attr("class", "spot")
+            .style('fill', 'white')
+            .style('font-size', '12px')
+            .text(function (d, i) {
+                if (i === 0)
+                    return "23일 0";
+                else if (i === 24)
+                    return "24일 0";
+                else if (i >= 24)
+                    return i - 24;
+                else
+                    return i;
+            })
     }
 
     function spot_clicked_event(d, p) {
@@ -138,7 +166,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             .data(features)
             // .enter().append("path")
 
-            .attr("style", function (d,i) {
+            .attr("style", function (d, i) {
                 each_level = dict_predict[p][d.properties.EMD_KOR_NM] * 100;
                 return "fill: " + color(Math.ceil(each_level));
             })
