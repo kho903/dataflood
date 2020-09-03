@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block video %}
+        <div style="float:left;width:50%;height:50%;background-Color:#F2FFFF">
+            <video oncontextmenu="return false;" controls autoplay>
+                <source src="{% static 'modeltest/cctv/cctv1.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+        <div style="clear:right;float:right;width:50%;height:50%;background-Color:#FFF2FF">
+            <video oncontextmenu="return false;" controls autoplay>
+                <source src="{% static 'modeltest/cctv/cctv2.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+        <div style="float:left;width:50%;height:50%;background-Color:#FFFFF2">
+            <video muted autoplay loop>
+                <source src="{% static 'modeltest/cctv/cctv3.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+        <div style="clear:right;float:right;width:50%;height:50%;background-Color:#EFEFEF">
+        </div>
+{% endblock %}

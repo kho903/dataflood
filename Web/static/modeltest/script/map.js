@@ -151,13 +151,13 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
 
     function spot_clicked_event(d, p) {
         var each_level;
-        if(check == 0 ){
-            check = 1
-            timer.stop()
-        }else{
-            check = 0
-            timer.restart()
-        }
+        // if(check == 0 ){
+        //     check = 1
+        //     // timer.stop()
+        // }else{
+        //     check = 0
+        //     timer.restart()
+        // }
         var color = d3.scaleLinear()
             .domain([0, 100])
             .range(["rgb(255, 255, 255)", "rgb(0, 0, 255)"]);
