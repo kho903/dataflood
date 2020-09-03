@@ -36,35 +36,35 @@
                 dict_imp[mydata.labels[i]] = mydata.datasets[3].data[i];
             }
             var dict_predict = [];
-            for(var j = 0 ; j < 28; j++){
+            for (var j = 0; j < 28; j++) {
                 hour_predict = {};
-                for (var i = 0; i<Rdong.length;i++){
+                for (var i = 0; i < Rdong.length; i++) {
                     hour_predict[Rdong[i]] = predicts[j][i];
                 }
                 dict_predict[j] = hour_predict;
             }
             // console.log(dict_predict[0]['가야동'])
-        let count = 0; 
-        let func = function (e) { 
-            console.log(count + "시")
-            str = '2020년 7월 23일 ' + count + '시' 
-            if (count > 23){
-                date = '2020년 7월 24일 ';
-                time = count - 24;
-                str = date + time + '시' 
-            }
-            a = document.getElementById('title');
-            a.innerHTML = str
-            count++; 
-            if (count > 27) 
-                count = 0; 
-            colorchange(dict_predict, count)
-        } 
+            let count = 0;
+            let func = function (e) {
+                console.log(count + "시");
+                str = '2020년 7월 23일 ' + count + '시';
+                if (count > 23) {
+                    date = '2020년 7월 24일 ';
+                    time = count - 24;
+                    str = date + time + '시'
+                }
+                a = document.getElementById('title');
+                a.innerHTML = str;
+                count++;
+                if (count > 27)
+                    count = 0;
+                colorchange(dict_predict, count)
+            };
 
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
                 // map.js
                 busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp, dict_predict);
-            timer = d3.interval(func,800)
+                timer = d3.interval(func, 800)
             });
         }
 
@@ -94,7 +94,7 @@
         var Rdong = {{Rdong|safe}};
         console.log(predicts);
         console.log(Rdong);
-       
+
     </script>
 {% endblock %}
 {% block body %}
@@ -107,7 +107,7 @@
             <h1>aa</h1>
         </div>
     </div>
-    <div class="row"> 
+    <div class="row">
         <div class='col-lg-4'>
             <p></p>
             <h1 id='title'></h1>
