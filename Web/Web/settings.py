@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'busanmap.apps.BusanmapConfig',
     'busan_dong.apps.BusanDongConfig',
     'modeltest.apps.ModeltestConfig',
+    'apitest.apps.ApitestConfig',
 ]
 
 MIDDLEWARE = [

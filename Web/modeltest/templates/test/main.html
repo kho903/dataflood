@@ -15,7 +15,6 @@
     <script>
         var BUSAN_JSON_DATA_URL = "{% static 'modeltest/emd.json' %}",
             TEST_SPOT_JSON_DATA_URL = "{% static 'modeltest/testSpots.json' %}";
-
         function initialize() {
             // 각 데이터들 (아래 script에 있는 mydata (차트 만들 때 썼던 데이터) )를 딕셔너리로 만들어 busan_dong_map에 인자로 넘겨줌
 
@@ -44,8 +43,33 @@
                 dict_predict[j] = hour_predict;
             }
             // console.log(dict_predict[0]['가야동'])
-            let count = 0;
-            let func = function (e) {
+            var check = 0;
+            var count = 0;
+            // let func = function (e) {
+            //     console.log(count + "시");
+            //     str = '2020년 7월 23일 ' + count + '시';
+            //     if (count > 23) {
+            //         date = '2020년 7월 24일 ';
+            //         time = count - 24;
+            //         str = date + time + '시'
+            //     }
+            //     a = document.getElementById('title');
+            //     a.innerHTML = str;
+            //     count++;
+            //     if (count > 27)
+            //         count = 0;
+            //     if (e < 22400){   
+            //         colorchange(dict_predict, count)
+            //     }else{
+            //         this.stop()
+            //     }
+            // };
+
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
+                // map.js
+                busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp, dict_predict);
+            });
+            var timer = d3.interval(function (e) {
                 console.log(count + "시");
                 str = '2020년 7월 23일 ' + count + '시';
                 if (count > 23) {
@@ -58,14 +82,12 @@
                 count++;
                 if (count > 27)
                     count = 0;
-                colorchange(dict_predict, count)
-            };
-
-            d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
-                // map.js
-                busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp, dict_predict);
-                timer = d3.interval(func, 800)
-            });
+                if (e < 22400){   
+                    colorchange(dict_predict, count)
+                }else{
+                    timer.stop()
+                }
+            }, 800)
         }
 
     </script>
@@ -92,6 +114,7 @@
         };
         var predicts = {{predict}};
         var Rdong = {{Rdong|safe}};
+        
         console.log(predicts);
         console.log(Rdong);
 

@@ -25,6 +25,7 @@ urlpatterns = [
     path('busanmap/', include('busanmap.urls')),
     path('busandong/', include('busan_dong.urls')),
     path('model/', include('modeltest.urls')),
+    path('now/', include('apitest.urls')),
     path('', HomeView.as_view(), name='home'),
 
     path('accounts/', include('django.contrib.auth.urls')),
