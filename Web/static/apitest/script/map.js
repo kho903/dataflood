@@ -137,24 +137,30 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
                     .range(["rgb(255, 255, 255)", "rgb(60, 80, 255)"]);
                 break;
         }
-
+        a = document.getElementById('title'); 
         map.selectAll("path")
             .data(features)
             // .enter().append("path")
 
             .attr("style", function (d, i) {
+                 
+                
                 switch (p) {
                     case 0:
                         each_level = dict_0[d.properties.EMD_KOR_NM] * 100;
+                        a.innerHTML = year +'년'+month+'월' + day + '일' + hour + " : " + minute + "기준 데이터"
                         break;
                     case 1:
                         each_level = dict_1[d.properties.EMD_KOR_NM] * 100;
+                        a.innerHTML = year +'년'+month+'월' + day + '일' + hour + " : " + minute + "기준 +1시간 데이터"
                         break;
                     case 2:
                         each_level = dict_2[d.properties.EMD_KOR_NM] * 100;
+                        a.innerHTML = year +'년'+month+'월' + day + '일' + hour + " : " + minute + "기준 +2시간 데이터"
                         break;
                     case 3:
                         each_level = dict_3[d.properties.EMD_KOR_NM] * 100;
+                        a.innerHTML = year +'년'+month+'월' + day + '일' + hour + " : " + minute + "기준 +3시간 데이터"
                         break;
                 }
                 return "fill: " + color(Math.ceil(each_level));

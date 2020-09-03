@@ -23,7 +23,9 @@ def show_busan_map(request):
     else:
         return HttpResponse(status=405)
 
-def get_date():
+
+
+def indexP(request):
     now = datetime.now()
     year = now.year
     month = now.month
@@ -35,10 +37,7 @@ def get_date():
         hour = hour - 1 
     dates = '%d%02d%02d'%(year,month,day)
     times = '%2d'%(hour) + '30'
-    return (dates,times)
-
-def indexP(request):
-    dates, times = get_date()
+    minute = '30'
     
     xycode = pd.read_csv('xycode.csv')
     busan_dong_base = pd.read_csv('base_data.csv')
@@ -109,8 +108,11 @@ def indexP(request):
     #     predict_results.append(df[str(i)].values.tolist())
 
     context = {
-        'dates':dates,
-        'times':times,
+        'year':year,
+        'month':month,
+        'day':day,
+        'hour':hour,
+        'minute': minute,
         'dong': dong,
         'result0': result0,
         'result1': result1,

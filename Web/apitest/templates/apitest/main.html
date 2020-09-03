@@ -39,7 +39,6 @@
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
                 // map.js
                 busan_dong_map('#map', _data, dict_0, dict_1, dict_2, dict_3);
-                timer = d3.interval(func, 800)
             });
         }
 
@@ -65,8 +64,12 @@
                     data: {{ result3|safe }}
                 }]
         };
-        var basedate = {{dates}}
-        var basetime = {{times}}
+
+        var year = {{year}}
+        var month = {{month}}
+        var day = {{day}}
+        var hour = {{hour}}
+        var minute = {{minute}}
 
     </script>
 {% endblock %}
