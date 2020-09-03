@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Busan{% endblock %}
+
+
+{% block extra-script %}
+    <link rel="stylesheet" href="{% static 'modeltest/stylesheet/map.css' %}">
+
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transition/1.1.1/d3-transition.js"></script>
+    <script src="{% static 'modeltest/script/map.js' %}"></script>
+
+    <script>
+        var BUSAN_JSON_DATA_URL = "{% static 'modeltest/emd.json' %}",
+            TEST_SPOT_JSON_DATA_URL = "{% static 'modeltest/testSpots.json' %}";
+
+        function initialize() {
+            // 각 데이터들 (아래 script에 있는 mydata (차트 만들 때 썼던 데이터) )를 딕셔너리로 만들어 busan_dong_map에 인자로 넘겨줌
+
+            var dict_high = {}; // 고도
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_high[mydata.labels[i]] = mydata.datasets[0].data[i];
+            }
+            var dict_pump = {}; // 펌프
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_pump[mydata.labels[i]] = mydata.datasets[1].data[i];
+            }
+            var dict_manhole = {}; // 맨홀
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_manhole[mydata.labels[i]] = mydata.datasets[2].data[i];
+            }
+            var dict_imp = {}; // 불투수면
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_imp[mydata.labels[i]] = mydata.datasets[3].data[i];
+            }
+            var dict_predict = [];
+            for(var j = 0 ; j < 28; j++){
+                hour_predict = {};
+                for (var i = 0; i<Rdong.length;i++){
+                    hour_predict[Rdong[i]] = predicts[j][i];
+                }
+                dict_predict[j] = hour_predict;
+            }
+            // console.log(dict_predict[0]['가야동'])
+        let count = 0; 
+        let func = function (e) { 
+            console.log(count + "시")
+            str = '2020년 7월 23일 ' + count + '시' 
+            if (count > 23){
+                date = '2020년 7월 24일 ';
+                time = count - 24;
+                str = date + time + '시' 
+            }
+            a = document.getElementById('title');
+            a.innerHTML = str
+            count++; 
+            if (count > 27) 
+                count = 0; 
+            colorchange(dict_predict, count)
+        } 
+
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
+                // map.js
+                busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp, dict_predict);
+            timer = d3.interval(func,800)
+            });
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+        var mydata = {
+            labels: {{ dong|safe }},
+            datasets: [{
+                label: '고도',
+                data: {{ high|safe }}
+            },
+                {
+                    label: '펌프',
+                    data: {{ pump|safe }}
+                }, {
+                    label: '맨홀',
+                    data: {{ manhole|safe }}
+                },
+                {
+                    label: '불투수면',
+                    data: {{ imp|safe }}
+                }]
+        };
+        var predicts = {{predict}};
+        var Rdong = {{Rdong|safe}};
+        console.log(predicts);
+        console.log(Rdong);
+       
+    </script>
+{% endblock %}
+{% block body %}
+    onload="initialize()"
+{% endblock %}
+
+{% block content %}
+    <div class='row'>
+        <div class='col-lg-4' style="background-color: rgb(150, 164, 164);">
+            <h1>aa</h1>
+        </div>
+    </div>
+    <div class="row"> 
+        <div class='col-lg-4'>
+            <p></p>
+            <h1 id='title'></h1>
+        </div>
+        <div class="col-lg-8">
+            <div id="map"></div>
+        </div>
+    </div>
+{% endblock %}

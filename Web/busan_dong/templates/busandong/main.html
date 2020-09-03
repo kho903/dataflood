@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Busan{% endblock %}
+
+
+{% block extra-script %}
+    <link rel="stylesheet" href="{% static 'busan_dong/stylesheet/map.css' %}">
+
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transition/1.1.1/d3-transition.js"></script>
+    <script src="{% static 'busan_dong/script/map.js' %}"></script>
+
+    <script>
+        var BUSAN_JSON_DATA_URL = "{% static 'busan_dong/emd.json' %}",
+            TEST_SPOT_JSON_DATA_URL = "{% static 'busan_dong/testSpots.json' %}";
+
+        function initialize() {
+            // 각 데이터들 (아래 script에 있는 mydata (차트 만들 때 썼던 데이터) )를 딕셔너리로 만들어 busan_dong_map에 인자로 넘겨줌
+
+            var dict_high = {}; // 고도
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_high[mydata.labels[i]] = mydata.datasets[0].data[i];
+            }
+            var dict_pump = {}; // 펌프
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_pump[mydata.labels[i]] = mydata.datasets[1].data[i];
+            }
+            var dict_manhole = {}; // 맨홀
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_manhole[mydata.labels[i]] = mydata.datasets[2].data[i];
+            }
+            var dict_imp = {}; // 불투수면
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_imp[mydata.labels[i]] = mydata.datasets[3].data[i];
+            }
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
+                // map.js
+                busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp);
+            });
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var mydata = {
+            labels: {{ dong|safe }},
+            datasets: [{
+                label: '고도',
+                backgroundColor: 'brown',
+                borderColor: 'brown',
+                xAxisID: 'A',
+                data: {{ high|safe }}
+            },
+                {
+                    label: '펌프',
+                    backgroundColor: 'rgb(0, 99, 132)',
+                    borderColor: 'rgb(0, 99, 132)',
+                    xAxisID: 'B',
+                    data: {{ pump|safe }}
+                }, {
+                    label: '맨홀',
+                    backgroundColor: 'rgb(77, 11, 88)',
+                    borderColor: 'rgb(77, 11, 88)',
+                    xAxisID: 'C',
+                    data: {{ manhole|safe }}
+                },
+                {
+                    label: '불투수면',
+                    backgroundColor: 'rgb(109,177,0)',
+                    borderColor: 'rgb(109,177,0)',
+                    xAxisID: 'D',
+                    data: {{ imp|safe }}
+                }]
+        };
+
+
+        var chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: mydata,
+            options: {
+                scales: {
+                    // x축의 범위를 각각 지정해 줌
+                    xAxes: [{
+                        id: 'A',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 65,
+                            min: 0
+                        }
+                    }, {
+                        id: 'B',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 4.3E-07,
+                            min: 0
+                        }
+                    }, {
+                        id: 'C',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 0.028,
+                            min: 0
+                        }
+                    }, {
+                        id: 'D',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 70,
+                            min: 0
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: '부산 각 동별 통계',
+                    fontSize: 40
+                },
+                barValueSpacing: 20,
+                legend: {
+                    display: true,
+                },
+
+            }
+        });
+        chart.data.datasets.forEach(function (d) {
+            d.hidden = !d.hidden;
+        });
+        chart.update();
+    </script>
+{% endblock %}
+{% block body %}
+    onload="initialize()"
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="lg-1">
+            <br><br><br><br><br><br>
+{#            <button id="toggle">show/hide all</button>#}
+            <canvas id="myChart" style="width: 300px; height:1200px"></canvas>
+        </div>
+        <div class="col-lg-1">
+            <div id="map"></div>
+        </div>
+    </div>
+{% endblock %}
