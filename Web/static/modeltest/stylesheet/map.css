@@ -36,8 +36,8 @@ g.tooltip {
     left:40%;
 }
 td{
-    width: 150px;
-    height: 50px;
+    width: 40px;
+    height: 20px;
 }
 
 #cam1 {
@@ -59,4 +59,10 @@ td{
     position:absolute;
     top:55%;
     left:74%;
+}
+
+#leg {
+    position:absolute;
+    top:30%;
+    left:90%;
 }
