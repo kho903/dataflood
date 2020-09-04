@@ -10,11 +10,13 @@
     />
     {% block extra-style %}{% endblock %}
 </head>
-<body {% block body %} style="padding-top:90px;" {% endblock %}>
+<body {% block body %} style="padding-top:90px; background-color: #8d93ab;" {% endblock %}>
 {% block video %}
 
 {% endblock %}
-<div class="container-fluid"  style="background-color: #8d93ab;" >
+<div{% block dclass %}
+class="container-fluid"
+{% endblock %} style="background-color: #8d93ab;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <a class="navbar-brand mx-5 mb-0 font-weight-bold font-italic" href="{% url 'home' %}">스마트 침수 예방</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">

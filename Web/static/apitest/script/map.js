@@ -69,10 +69,10 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
                 })
                 .attr("d", path)
                 .on("click", province_clicked_event)
-                // 지도 애니메이션 duration() 시간별로 색깔 각각 지정 후 main.html 에서
-                // 받아온 각 딕셔너리별로 each_level을 정해서 색 변경
-                // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
-                // each_level = dict_**[d.properties.EMD_KOR_NM] 뒤에 수치를 곱하여 [0, 100]단위로 임의 정규화
+            // 지도 애니메이션 duration() 시간별로 색깔 각각 지정 후 main.html 에서
+            // 받아온 각 딕셔너리별로 each_level을 정해서 색 변경
+            // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
+            // each_level = dict_**[d.properties.EMD_KOR_NM] 뒤에 수치를 곱하여 [0, 100]단위로 임의 정규화
             map.selectAll("text")
                 .data(features)
                 .enter().append("text")
@@ -90,6 +90,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             callback();
         });
     }
+
     // 지도 위 동그라미
     // 각각 눌렀을 때 고도, 펌프, 맨홀, 불투수면 비 지도에 표시
     function spotting_on_map() {
@@ -98,7 +99,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .append("circle")
             .attr("class", "spot")
             .attr("cx", function (d, i) {
-                return [100, 130, 160, 190][i];
+                return [100, 150, 200, 250][i];
             })
             .attr("cy", function (d) {
                 return [230];
@@ -111,21 +112,23 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .transition()
             .ease(d3.easeElastic);
 
-        map.selectAll('text')
-        .append('circle')
-        .data(_spots).enter()
-        .append('text')
-        .attr('dx', function(d,i){
-            return[100,130,160,190][i]-3;
-        })
-        .attr('dy',function(d,i){
-            return[230,230,230,230][i];
-        })
-        .attr("class", "spot")
+        map.selectAll("text")
+            .append("circle")
+            .data(_spots).enter()
+            .append("text")
+            .attr("dx", function (d, i) {
+                return [100, 150, 200, 250][i] - 3;
+            })
+            .attr("dy", function (d, i) {
+                console.log(i);
+                return [230, 230, 230, 230][i];
+            })
+            .attr("class", "spot")
             .style('fill', 'white')
             .style('font-size', '12px')
             .text(function (d, i) {
-                return str(i);
+                console.log(i);
+                return i;
             });
     }
 
@@ -154,36 +157,36 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
                     .range(["rgb(241,255,200)", "rgb(109,177,0)"]);
                 break;
         }
-        a = document.getElementById('title'); 
+        a = document.getElementById('title');
         map.selectAll("path")
             .data(features)
             // .enter().append("path")
 
             .attr("style", function (d, i) {
-                 
-                
+
+
                 switch (p) {
                     case 0:
                         each_level = dict_0[d.properties.EMD_KOR_NM] * 100;
-                        a.innerHTML = year +' 년 '+month+ ' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 데이터"
+                        a.innerHTML = year + ' 년 ' + month + ' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 데이터"
                         break;
                     case 1:
                         each_level = dict_1[d.properties.EMD_KOR_NM] * 100;
-                        a.innerHTML = year +' 년 '+month+' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +1시간 데이터"
+                        a.innerHTML = year + ' 년 ' + month + ' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +1시간 데이터"
                         break;
                     case 2:
                         each_level = dict_2[d.properties.EMD_KOR_NM] * 100;
-                        a.innerHTML = year +' 년 '+month+' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +2시간 데이터"
+                        a.innerHTML = year + ' 년 ' + month + ' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +2시간 데이터"
                         break;
                     case 3:
                         each_level = dict_3[d.properties.EMD_KOR_NM] * 100;
-                        a.innerHTML = year +' 년 '+month+' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +3시간 데이터"
+                        a.innerHTML = year + ' 년 ' + month + ' 월 ' + day + ' 일 ' + hour + " : " + minute + " 기준 +3시간 데이터"
                         break;
                 }
                 return "fill: " + color(Math.ceil(each_level));
             })
     }
-    
+
     // 클릭시 확대 이벤트
     function province_clicked_event(d) {
         var x, y, zoomLevel;

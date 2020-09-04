@@ -73,7 +73,7 @@ def indexP(request):
     finaldf = finaldf.rename(columns={a[0]:'X', a[1]:'Y', a[2]:'+0', a[3]:'+1',a[4]:'+2',a[5]:'+3'})
     test = pd.merge(busan_dong_base,finaldf,left_on=['X','Y'], right_on=['X','Y'], how='left')
     test = test.drop(columns='Unnamed: 0')
-    model = joblib.load('Voting.pkl')
+    model = joblib.load('ensemble.pkl')
     column = test.columns
     for i in range(0,4):
         Testmodel = test[['SLOPE_AVG','HIGH','PUMP_RATIO','IMP_SUR_RATIO','MANHOLES_RATIO',column[10+i]]]
