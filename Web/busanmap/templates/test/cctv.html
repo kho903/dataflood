@@ -23,25 +23,33 @@
     </section> -->
     <link rel="stylesheet" href="{% static 'modeltest/stylesheet/map.css' %}">
     <div class='row' style="background-color: #393b44;">
-        <div class='col-md-6 col-md-offset-6 center-block' height="50%" style='margin-left: 600px;'>
+        <div class='col-md-6 col-md-offset-6 center-block' height="50%" style='margin: 0 25%;'>
             <div class='row'>
+                <h1 id='cam1' style="color: whitesmoke;">CAM1</h1>
+
                 <video oncontextmenu="return false;" controls autoplay muted width="50%" height="50%">
                     <source src="{% static 'cctv1.mp4' type='video/mp4' %}">
                 </video>
                 <video oncontextmenu="return false;" controls autoplay muted width="50%" height="50%">
                     <source src="{% static 'cctv3.mp4' type='video/mp4' %}">
                 </video>
+                <h1 id='cam2' style="color: whitesmoke;">CAM2</h1>
+
             </div>
             <div class='row'>
+                <h1 id='cam3' style="color: whitesmoke;">CAM3</h1>
+
                 <video oncontextmenu="return false;" controls muted autoplay width="50%" height="50%">
                     <source src="{% static 'cctv2.mp4' type='video/mp4' %}">
                 </video>
                 <img src="{% static 'testb.jpg' %}" style="height: 100%; width:50%; object-fit: contain;">
+                <h1 id='cam4' style="color: whitesmoke;">CAM4</h1>
+
             </div>
         </div>
-        <h1 id='cam1' style="color: whitesmoke;">CAM 1 </h1>
-        <h1 id='cam2' style="color: whitesmoke;">CAM 2 </h1>
-        <h1 id='cam3' style="color: whitesmoke;">CAM 3 </h1>
-        <h1 id='cam4' style="color: whitesmoke;">CAM 4 </h1>
+        {#        <h1 id='cam1' style="color: whitesmoke;">CAM 1 </h1>#}
+        {#        <h1 id='cam2' style="color: whitesmoke;">CAM 2 </h1>#}
+        {#        <h1 id='cam3' style="color: whitesmoke;">CAM 3 </h1>#}
+        {#        <h1 id='cam4' style="color: whitesmoke;">CAM 4 </h1>#}
     </div>
 {% endblock %}

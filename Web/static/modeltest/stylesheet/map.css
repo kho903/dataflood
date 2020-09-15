@@ -43,22 +43,22 @@ td{
 #cam1 {
     position:absolute;
     top:8%;
-    left:18%;
+    left:-10%;
 }
 #cam2{
     position:absolute;
     top:8%;
-    left:74%;
+    left:100%;
 }
 #cam3{
     position:absolute;
     top:55%;
-    left:18%;
+    left:-10%;
 }
 #cam4{
     position:absolute;
     top:55%;
-    left:74%;
+    left:100%;
 }
 
 #leg {
