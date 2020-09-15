@@ -2,7 +2,9 @@ from django.http import HttpResponse
 from django.template import loader
 import pandas as pd
 from django.shortcuts import render
+import sqlite3
 
+con = sqlite3.connect('db.sqlite3', check_same_thread=False)
 
 def show_busan_map(request):
     def get():
@@ -15,8 +17,11 @@ def show_busan_map(request):
 
 
 def indexPage(request):
-    df = pd.read_excel('PIH_merge.xlsx')
-    df_lv = pd.read_excel('F_BIN_WEIGHT_INFO.xlsx')
+    # df = pd.read_excel('PIH_merge.xlsx')
+    df = pd.read_sql_query("SELECT * FROM PIH_Merge", con)
+    # df_lv = pd.read_excel('F_BIN_WEIGHT_INFO.xlsx')
+    df_lv = pd.read_sql_query("SELECT * FROM F_BIN_WEIGHT_INFO", con)
+
     df_lv_v = df_lv[['ZONE', 'F_GRADE']].sort_values(by='ZONE', ascending=True)
     grade = df_lv_v['F_GRADE'].values.tolist()
 
