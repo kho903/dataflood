@@ -43,28 +43,8 @@
                 }
                 dict_predict[j] = hour_predict;
             }
-            // console.log(dict_predict[0]['가야동'])
             var check = 0;
             var count = 0;
-            // let func = function (e) {
-            //     console.log(count + "시");
-            //     str = '2020년 7월 23일 ' + count + '시';
-            //     if (count > 23) {
-            //         date = '2020년 7월 24일 ';
-            //         time = count - 24;
-            //         str = date + time + '시'
-            //     }
-            //     a = document.getElementById('title');
-            //     a.innerHTML = str;
-            //     count++;
-            //     if (count > 27)
-            //         count = 0;
-            //     if (e < 22400){
-            //         colorchange(dict_predict, count)
-            //     }else{
-            //         this.stop()
-            //     }
-            // };
 
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
                 // map.js
@@ -128,10 +108,6 @@
 {% block content %}
     <h1 id='title'></h1>
 
-    <div class='row'>
-        <div class='col-lg-4' style="background-color: rgb(150, 164, 164);">
-        </div>
-    </div>
 
     <div class="row">
         <div class='col-lg-4 d-none d-xl-block'>

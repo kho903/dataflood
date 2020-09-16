@@ -153,19 +153,6 @@ def apitest(request):
     result2 = test['result2'].values.tolist()
     result3 = test['result3'].values.tolist()
     dong = test['Dong'].values.tolist()
-    # df = pd.read_excel('F_Final_PIH_V1.xlsx')
-    # df2 = df[['Dong', 'HIGH', 'PUMP_RATIO', 'IMP_SUR_RATIO', 'MANHOLES_RATIO']].groupby('Dong').mean().reset_index()
-    # dong = df2['Dong'].values.tolist()
-    # high = df2['HIGH'].values.tolist()
-    # pump = df2['PUMP_RATIO'].values.tolist()
-    # imp = df2['IMP_SUR_RATIO'].values.tolist()
-    # manhole = df2['MANHOLES_RATIO'].values.tolist()
-
-    # df = pd.read_csv('Realfinal.csv')
-    # Rdong = df['Dong'].values.tolist()
-    # predict_results = []
-    # for i in range(0,28):
-    #     predict_results.append(df[str(i)].values.tolist())
 
     context = {
         'year': year,
