@@ -30,9 +30,7 @@ def show_busan_map(request):
 
 
 def indexPage(request):
-    # df = pd.read_excel('PIH_merge.xlsx')
     df = pd.read_sql_query("SELECT * FROM PIH_Merge", con)
-    # df_lv = pd.read_excel('F_BIN_WEIGHT_INFO.xlsx')
     df_lv = pd.read_sql_query("SELECT * FROM F_BIN_WEIGHT_INFO", con)
 
     df_lv_v = df_lv[['ZONE', 'F_GRADE']].sort_values(by='ZONE', ascending=True)
@@ -57,7 +55,7 @@ def indexPage(request):
 
 
 def indexP(request):
-    df = pd.read_excel('F_Final_PIH_V1.xlsx')
+    df = pd.read_sql_query('SELECT * FROM F_Final_PIH_V1', con)
     df2 = df[['Dong', 'HIGH', 'PUMP_RATIO', 'IMP_SUR_RATIO', 'MANHOLES_RATIO']].groupby('Dong').mean().reset_index()
     dong = df2['Dong'].values.tolist()
     high = df2['HIGH'].values.tolist()
@@ -65,7 +63,7 @@ def indexP(request):
     imp = df2['IMP_SUR_RATIO'].values.tolist()
     manhole = df2['MANHOLES_RATIO'].values.tolist()
 
-    df = pd.read_csv('Realfinal.csv')
+    df = pd.read_sql_query('SELECT * FROM Realfinal', con)
     Rdong = df['Dong'].values.tolist()
     predict_results = []
     for i in range(0, 28):
@@ -97,8 +95,8 @@ def apitest(request):
     times = '%2d' % (hour) + '30'
     minute = '30'
 
-    xycode = pd.read_csv('xycode.csv')
-    busan_dong_base = pd.read_csv('base_data.csv')
+    xycode = pd.read_sql_query('SELECT * FROM xycode', con)
+    busan_dong_base = pd.read_sql_query('SELECT * FROM base_data', con)
 
     code = list()
     for i in range(0, xycode.shape[0]):
@@ -134,7 +132,7 @@ def apitest(request):
     a = finaldf.columns
     finaldf = finaldf.rename(columns={a[0]: 'X', a[1]: 'Y', a[2]: '+0', a[3]: '+1', a[4]: '+2', a[5]: '+3'})
     test = pd.merge(busan_dong_base, finaldf, left_on=['X', 'Y'], right_on=['X', 'Y'], how='left')
-    test = test.drop(columns='Unnamed: 0')
+    # test = test.drop(columns='Unnamed: 0')
     model = joblib.load('ensemble.pkl')
     column = test.columns
     for i in range(0, 4):
