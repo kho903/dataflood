@@ -151,25 +151,16 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
 
     function spot_clicked_event(d, p) {
         var each_level;
-        // if(check == 0 ){
-        //     check = 1
-        //     // timer.stop()
-        // }else{
-        //     check = 0
-        //     timer.restart()
-        // }
         var color = d3.scaleLinear()
             .domain([0, 100])
             .range(["rgb(255, 255, 255)", "rgb(255, 0, 0)"]);
 
         map.selectAll("path")
             .data(features)
-            // .enter().append("path")
-
             .attr("style", function (d, i) {
                 each_level = dict_predict[p][d.properties.EMD_KOR_NM] * 100;
                 return "fill: " + color(Math.ceil(each_level));
-            })
+            });
         str = '2020년 7월 23일 ' + p + '시';
         if (p > 23){
             date = '2020년 7월 24일';
