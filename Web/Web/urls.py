@@ -21,12 +21,5 @@ from Web.views import UserCreateView, UserCreateDoneTV, HomeView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('busanmap/', include('busanmap.urls')),
-    path('model/', include('modeltest.urls')),
-    path('realBusan/', include('apitest.urls')),
     path('', HomeView.as_view(), name='home'),
-
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register/', UserCreateView.as_view(), name='register'),
-    path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
-
 ]
