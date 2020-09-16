@@ -43,7 +43,6 @@
                 }
                 dict_predict[j] = hour_predict;
             }
-            var check = 0;
             var count = 0;
 
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
@@ -51,7 +50,6 @@
                 busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp, dict_predict);
             });
             var timer = d3.interval(function (e) {
-                console.log(count + "시");
                 str = '2020년 7월 23일 ' + count + '시';
                 if (count > 23) {
                     date = '2020년 7월 24일 ';
@@ -95,9 +93,6 @@
         };
         var predicts = {{predict}};
         var Rdong = {{Rdong|safe}};
-
-        console.log(predicts);
-        console.log(Rdong);
 
     </script>
 {% endblock %}

@@ -106,7 +106,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .attr("cy", function (d, i) {
                 return [
                     230, 230, 230, 230
-                ][i]-80;
+                ][i] - 80;
             })
             .attr("r", "20px")
             .attr("fill", function (d, i) {
@@ -128,13 +128,21 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .attr("dy", function (d, i) {
                 return [
                     230, 230, 230, 230
-                ][i]-79;
+                ][i] - 79;
             })
             .attr("class", "spot")
             .style('fill', 'white')
             .style('font-size', '12px')
             .text(function (d, i) {
-                return i;
+                console.log("d는 ", d, "i", i);
+                if (i === 0)
+                    return "0";
+                else if (i === 1)
+                    return "1";
+                else if (i === 2)
+                    return "2";
+                else if (i === 3)
+                    return "3";
             })
     }
 

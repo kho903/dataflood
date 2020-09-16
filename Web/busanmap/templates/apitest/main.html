@@ -15,26 +15,23 @@
     <script>
         var BUSAN_JSON_DATA_URL = "{% static 'apitest/emd.json' %}",
             TEST_SPOT_JSON_DATA_URL = "{% static 'apitest/testSpots.json' %}";
+        var dict_0 = {};
+
+        // 시간 별 데이터를 만드는 딕셔너리 생성 함수
+        function data_to_dict(dict_a, a) {
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_a[mydata.labels[i]] = mydata.datasets[a].data[i];
+            }
+        }
 
         function initialize() {
             // 각 데이터들 (아래 script에 있는 mydata (차트 만들 때 썼던 데이터) )를 딕셔너리로 만들어 busan_dong_map에 인자로 넘겨줌
 
-            var dict_0 = {}; // 현재 
-            for (var i = 0; i < mydata.labels.length; i++) {
-                dict_0[mydata.labels[i]] = mydata.datasets[0].data[i];
-            }
-            var dict_1 = {}; // 1시간후
-            for (var i = 0; i < mydata.labels.length; i++) {
-                dict_1[mydata.labels[i]] = mydata.datasets[1].data[i];
-            }
-            var dict_2 = {}; // 2시간후
-            for (var i = 0; i < mydata.labels.length; i++) {
-                dict_2[mydata.labels[i]] = mydata.datasets[2].data[i];
-            }
-            var dict_3 = {}; // 3시간후
-            for (var i = 0; i < mydata.labels.length; i++) {
-                dict_3[mydata.labels[i]] = mydata.datasets[3].data[i];
-            }
+            var dict_0 = {}, dict_1 = {}, dict_2 = {}, dict_3 = {};
+            data_to_dict(dict_0, 0); // 현재
+            data_to_dict(dict_1, 1); // 1시간후
+            data_to_dict(dict_2, 2); // 2시간후
+            data_to_dict(dict_3, 3); // 3시간후
 
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
                 // map.js

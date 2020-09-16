@@ -12,8 +12,6 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
         HEIGHT = window.innerHeight;
         WIDTH = 1200;
 
-        console.log('Map scale', {'height': HEIGHT, 'width': WIDTH});
-
         projection = d3.geoMercator().translate([WIDTH / 2, HEIGHT / 2]);
         path = d3.geoPath().projection(projection);
 
@@ -37,25 +35,9 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
 
             projection.scale(scale).center(center);
 
-            // var color = d3.scaleThreshold()
-            //     .domain([1,2,9,10,12,14,15])
-            //     .range([/*"rgb(247,251,255)",*/ "rgb(222,235,247)", "rgb(198,219,239)", "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"]);
-
-            // var color = [/*"rgb(247,251,255)", */ "rgb(222,235,247)", /*"rgb(198,219,239)",*/ "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
-            // var color = [/*"rgb(247,251,255)", */ "rgb(222,235,247)", /*"rgb(198,219,239)",*/ "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
-
             map.selectAll("path")
                 .data(features)
                 .enter().append("path")
-
-                // .attr("style", function(d,i){
-                //     console.log("d는 ");
-                //     return "fill: " + color(i);
-                // })
-                // .attr("style", function(d,i){
-                //     var each_level = dict_d[d.properties.SIG_KOR_NM];
-                //     return "fill: " + color[each_level];
-                // })
 
                 .attr("class", function (d) {
                     return "municipality c " + d.properties.SIG_KOR_NM;
@@ -131,7 +113,6 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
             // .enter().append("path")
 
             .attr("style", function (d, i) {
-                console.log(p);
                 switch (p) {
                     case 0:
                         each_level = dict_a[d.properties.SIG_KOR_NM] * 1.5;
@@ -163,7 +144,6 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
             else
                 zoomLevel = 2;
             CENTERED = d;
-            // console.log('centered', CENTERED);
         } else {
             x = WIDTH / 2;
             y = HEIGHT / 2;
