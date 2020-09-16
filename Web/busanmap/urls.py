@@ -1,6 +1,5 @@
-from django.contrib import admin
-from django.urls import path, include
-from busanmap.map import show_busan_map, indexPage, indexP, apitest
+from django.urls import path
+from busanmap.map import indexPage, indexP, apitest
 from busanmap.views import cctv
 
 urlpatterns = [
