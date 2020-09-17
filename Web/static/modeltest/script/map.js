@@ -4,17 +4,20 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
         MAP_CONTAINER_ID = _mapContainerId,
         busan = 'emd'; // 부산 지도 정보가 들어있는 json파일 import
 
+    // 변수 지정
     var projection, path, svg,
         geoJson, features, bounds, center,
-        map; // 변수 지정
+        map;
 
     function create(callback) {
+        // 지도 크기 지정
         HEIGHT = window.innerHeight;
         WIDTH = 1200;
 
         projection = d3.geoMercator().translate([WIDTH / 2, HEIGHT / 2]);
         path = d3.geoPath().projection(projection);
 
+        // d3를 이용하여 svg 요소 생성
         svg = d3.select(MAP_CONTAINER_ID).append("svg")
             .attr("width", WIDTH)
             .attr("height", HEIGHT);
@@ -40,11 +43,9 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             map.selectAll("path")
                 .data(features)
                 .enter().append("path")
-                .attr('class', function (d) {
-                    return 'province ' + d.properties.EMD_KOR_NM;
-                })
                 .attr('d', path)
                 .on('mousemove', function (d) {
+                    // mouse 움직임에 따른 위치 변수 지정
                     var mouse = d3.mouse(svg.node()).map(function (d) {
                         return parseInt(d);
                     });
@@ -103,6 +104,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             .transition()
             .ease(d3.easeElastic);
 
+        // circle 안에 들어갈 text(숫자) 생성
         map.selectAll("text")
             .append("circle")
             .data(_spots).enter()
@@ -128,12 +130,14 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
                 ][i] - 79;
             })
             .attr("class", "spot")
-            .style('fill', 'white')
-            .style('font-size', '12px')
+            .style('fill', 'white') // font style
+            .style('font-size', '12px') // font style
             .text(function (d, i) {
                 if (i === 0)
+                    // 날짜가 바뀌는 것을 알기 위해 일까지 표시
                     return "23일 0";
                 else if (i === 24)
+                    // 날짜가 바뀌는 것을 알기 위해 일까지 표시
                     return "24일 0";
                 else if (i >= 24)
                     return i - 24;
@@ -148,6 +152,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
         var each_level;
         
         // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
+        // each_level 에 따라 색깔 지정
         var color = d3.scaleLinear()
             .domain([0, 100])
             .range(["rgb(255, 255, 255)", "rgb(255, 0, 0)"]);
@@ -155,6 +160,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
         map.selectAll("path")
             .data(features)
             .attr("style", function (d, i) {
+                // dict_predict[p][d.properties.EMD_KOR_NM] : 각 구별 예측 데이터
                 each_level = dict_predict[p][d.properties.EMD_KOR_NM] * 100;
                 return "fill: " + color(Math.ceil(each_level));
             });
@@ -201,6 +207,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
     });
 }
 
+// 지도 색깔 변경 함수
 function colorchange(dict_predict, count) {
     var map = d3.select("#map");
     check = map.selectAll("path");

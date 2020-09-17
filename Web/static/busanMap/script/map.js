@@ -4,19 +4,21 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
         MAP_CONTAINER_ID = _mapContainerId,
         busan = 'busan_sig'; // 부산 지도 정보가 들어있는 json파일 import
 
+     // 변수 지정
     var projection, path, svg,
         geoJson, features, bounds, center,
-        map; // 변수 지정
+        map;
     
     // d3.js 생성 
     function create(callback) {
+        // 지도 크기 지정
         HEIGHT = window.innerHeight;
-
         WIDTH = 1200;
 
         projection = d3.geoMercator().translate([WIDTH / 2, HEIGHT / 2]);
         path = d3.geoPath().projection(projection);
 
+        // d3를 이용하여 svg 요소 생성
         svg = d3.select(MAP_CONTAINER_ID).append("svg")
             .attr("width", WIDTH)
             .attr("height", HEIGHT);
@@ -114,8 +116,6 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
 
         map.selectAll("path")
             .data(features)
-            // .enter().append("path")
-
             .attr("style", function (d, i) {
                 switch (p) {
                     case 0:
@@ -133,6 +133,7 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
             })
     }
 
+    // 클릭시 확대 이벤트
     function province_clicked_event(d) {
         var x, y, zoomLevel;
 
