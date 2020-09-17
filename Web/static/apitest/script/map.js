@@ -35,11 +35,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
 
             projection.scale(scale).center(center);
 
-
-            var color = d3.scaleLinear()
-                .domain([0, 100])
-                .range(["#f2dfd3", "#964b00"]);
-
             // tooltip 생성(map 각 동별로 hover 시 동 이름 띄우기)
             var tooltip = d3.select("#map").append("g")
                 .attr('class', 'hidden tooltip');
@@ -55,6 +50,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
                     var mouse = d3.mouse(svg.node()).map(function (d) {
                         return parseInt(d);
                     });
+                    // tooltip 위치 지정
                     tooltip.classed('hidden', false)
                         .attr('style', 'left:' + (mouse[0] + 35) +
                             'px; top:' + (mouse[1] - 35) + 'px')
@@ -77,8 +73,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
         });
     }
 
-    // 지도 위 동그라미
-    // 각각 눌렀을 때 고도, 펌프, 맨홀, 불투수면 비 지도에 표시
+    // 지도 위 circle 표시
     function spotting_on_map() {
         var circles = map.selectAll("circle")
             .data(_spots).enter()
@@ -86,16 +81,19 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .attr("class", "spot")
             .attr("cx", function (d, i) {
                 return [
+                // 표시할 x 좌표
                     100, 145, 190, 235
                 ][i];
             })
             .attr("cy", function (d, i) {
                 return [
+                // 표시할 y 좌표
                     230, 230, 230, 230
                 ][i] - 80;
             })
             .attr("r", "20px")
             .attr("fill", function (d, i) {
+                // circle 색 지정
                 return ["brown", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(109,177,0)"][i]
             })
             .on('click', spot_clicked_event)
@@ -108,11 +106,13 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .append("text")
             .attr("dx", function (d, i) {
                 return [
+                    // 표시할 x 좌표
                     100, 145, 190, 235
                 ][i] - 3;
             })
             .attr("dy", function (d, i) {
                 return [
+                    // 표시할 y 좌표
                     230, 230, 230, 230
                 ][i] - 79;
             })
@@ -131,9 +131,13 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             })
     }
 
+    // circle 클릭 이벤트
+    // 현재, +1시간, +2시간, +3시간 후 예상 침수 위험도 표시
     function spot_clicked_event(d, p) {
         var color;
         var each_level;
+        // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
+
         switch (p) {
             case 0:
                 color = d3.scaleLinear()
@@ -159,11 +163,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
         a = document.getElementById('title');
         map.selectAll("path")
             .data(features)
-            // .enter().append("path")
-
             .attr("style", function (d, i) {
-
-
                 switch (p) {
                     case 0:
                         each_level = dict_0[d.properties.EMD_KOR_NM] * 100;

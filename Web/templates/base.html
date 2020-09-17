@@ -18,12 +18,12 @@
 class="container-fluid"
 {% endblock %} style="background-color: #8d93ab;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand mx-5 mb-0 font-weight-bold font-italic" href="{% url 'home' %}">스마트 침수 예방</a>
+    <a class="navbar-brand mx-5 mb-0 font-weight-bold font-italic" href="{% url 'home' %}">Data Flood</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
+        {# navbar 안의 각 항목별 a href="{% url 'urlname (urls.py에서 지정해 주었던 name)' %}"를 이용하여 링크 생성 #}
         <li class="nav-item mx-1 btn">
             <a class="nav-link text-white" href="{% url 'BusanMap' %}">부산지역 구단위 정보</a>
         </li>
@@ -39,14 +39,17 @@ class="container-fluid"
 
     </div>
 </nav>
-
+    {# 메인 content #}
     {% block content %}
     {% endblock %}
 </div>
+{# bootstrap import #}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/c998a172fe.js"></script>
+
+
 {% block extra-script %}{% endblock %}
 
 

@@ -20,8 +20,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             .attr("height", HEIGHT);
 
         map = svg.append("g").attr("id", "map");
-        places = svg.append("g").attr("id", "places");
-
 
         d3.json(BUSAN_JSON_DATA_URL).then(function (_data) {
             geoJson = topojson.feature(_data, _data.objects[busan]);
@@ -34,11 +32,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             var scale = HEIGHT / distance / Math.sqrt(2) * 1.2;
 
             projection.scale(scale).center(center);
-
-
-            var color = d3.scaleLinear()
-                .domain([0, 100])
-                .range(["#f2dfd3", "#964b00"]);
 
             // tooltip 생성(map 각 동별로 hover 시 동 이름 띄우기)
             var tooltip = d3.select("#map").append("g")
@@ -55,6 +48,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
                     var mouse = d3.mouse(svg.node()).map(function (d) {
                         return parseInt(d);
                     });
+                    // tooltip 위치 지정
                     tooltip.classed('hidden', false)
                         .attr('style', 'left:' + (mouse[0] + 35) +
                             'px; top:' + (mouse[1] - 35) + 'px;')
@@ -72,8 +66,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
         });
     }
 
-    // 지도 위 동그라미
-    // 각각 눌렀을 때 고도, 펌프, 맨홀, 불투수면 비 지도에 표시
+    // 지도 위 circle 표시
     function spotting_on_map() {
         var circles = map.selectAll("circle")
             .data(_spots).enter()
@@ -81,6 +74,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             .attr("class", "spot")
             .attr("cx", function (d, i) {
                 return [
+                    // 표시할 x 좌표
                     100, 145, 190, 235, 280, 325,
                     370, 415, 460, 505, 550, 595,
                     100, 145, 190, 235, 280, 325,
@@ -90,16 +84,18 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             })
             .attr("cy", function (d, i) {
                 return [
+                    // 표시할 y 좌표
                     230, 230, 230, 230, 230, 230,
                     230, 230, 230, 230, 230, 230,
                     280, 280, 280, 280, 280, 280,
                     280, 280, 280, 280, 280, 280,
                     330, 330, 330, 330
-                ][i]-80;
+                ][i] - 80;
             })
             .attr("r", "20px")
             .attr("fill", function (d, i) {
-                if(i===22 || i===23)
+                // 침수가 일어났던 시간 circle에만 red 색 지정
+                if (i === 22 || i === 23)
                     return "red"
             })
             .on('click', spot_clicked_event)
@@ -112,6 +108,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             .append("text")
             .attr("dx", function (d, i) {
                 return [
+                    // 표시할 x 좌표
                     80, 145, 190, 235, 280, 325,
                     370, 415, 460, 505, 550, 595,
                     100, 145, 190, 235, 280, 325,
@@ -121,12 +118,13 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             })
             .attr("dy", function (d, i) {
                 return [
+                    // 표시할 y 좌표
                     230, 230, 230, 230, 230, 230,
                     230, 230, 230, 230, 230, 230,
                     280, 280, 280, 280, 280, 280,
                     280, 280, 280, 280, 280, 280,
                     330, 330, 330, 330
-                ][i]-79;
+                ][i] - 79;
             })
             .attr("class", "spot")
             .style('fill', 'white')
@@ -143,8 +141,12 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
             })
     }
 
+    // circle 클릭 이벤트
+    // 각각 시간별로 침수위험도 표시
     function spot_clicked_event(d, p) {
         var each_level;
+        
+        // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
         var color = d3.scaleLinear()
             .domain([0, 100])
             .range(["rgb(255, 255, 255)", "rgb(255, 0, 0)"]);
@@ -156,9 +158,9 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
                 return "fill: " + color(Math.ceil(each_level));
             });
         str = '2020년 7월 23일 ' + p + '시';
-        if (p > 23){
+        if (p > 23) {
             date = '2020년 7월 24일';
-            time = p-24;
+            time = p - 24;
             str = date + time + '시';
         }
         a = document.getElementById('title');

@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Busan{% endblock %}
+{% block title %}Simulation 결과 보기{% endblock %}
 
 
 {% block extra-script %}
     <link rel="stylesheet" href="{% static 'modeltest/stylesheet/map.css' %}">
 
+    {# d3 import #}
     <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transition/1.1.1/d3-transition.js"></script>
+    {# map.js import #}
     <script src="{% static 'modeltest/script/map.js' %}"></script>
 
     <script>
@@ -54,18 +56,19 @@
     </script>
 
     <script>
+        // map.py에서 넘겨받은 context들을 이용
         var predicts = {{predict}};
         var Rdong = {{Rdong|safe}};
     </script>
 {% endblock %}
 {% block body %}
+    {# body에서 initialize 호출 #}
     onload="initialize()"
 {% endblock %}
 
 {% block content %}
-    <h1 id='title'></h1>
-
     <div class="row">
+        {# 범례생성 #}
         <div class='col-lg-4 d-none d-xl-block'>
             <br><br>
             <table id="leg" style="float:right">
@@ -147,6 +150,7 @@
             </table>
         </div>
         <div class="col-lg-8">
+            {# 지도표시 #}
             <div id="map"></div>
         </div>
     </div>

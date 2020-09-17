@@ -15,8 +15,13 @@ import pickle
 import joblib
 from sklearn.preprocessing import MinMaxScaler
 
+# sqlite3 데이터베이스를 사용하기 위해 불러온다.
+# 같은 파일 내에서 db가 생성되지 않았기 때문에 
+# check_same_thread=False를 이용하여 오류를  방지
 con = sqlite3.connect('db.sqlite3', check_same_thread=False)
 
+# df = pd.read_sql_query("SELECT * FROM 테이블명", con)
+# 을 이용하여 db에 있는 테이블을 pandas dataframe으로 만들어 사용
 
 def show_busan_map(request):
     def get():
@@ -31,8 +36,8 @@ def show_busan_map(request):
 
 def indexPage(request):
     df = pd.read_sql_query("SELECT * FROM PIH_Merge", con)
-
-
+    
+    # dataframe을 사용하여 각 항목별 context를 추출
     df_v = df[['ZONE', 'F_WEIGHT']].sort_values(by='ZONE', ascending=True)
     df_i = df[['ZONE', 'Impervious_Surface_Weight']].sort_values(by='ZONE', ascending=True)
     df_p = df[['ZONE', 'PUMP_RATIO']].sort_values(by='ZONE', ascending=True)
@@ -47,11 +52,14 @@ def indexPage(request):
         'pump': pump,
         'grade': grade
     }
+    # context 인자를 busanmap/main.html로 넘겨준다.
     return render(request, 'busanmap/main.html', context=context)
 
 
 def indexP(request):
     df = pd.read_sql_query('SELECT * FROM F_Final_PIH_V1', con)
+    
+    # dataframe을 사용하여 각 항목별 context를 추출
     df2 = df[['Dong', 'HIGH', 'PUMP_RATIO', 'IMP_SUR_RATIO', 'MANHOLES_RATIO']].groupby('Dong').mean().reset_index()
     dong = df2['Dong'].values.tolist()
     high = df2['HIGH'].values.tolist()
@@ -74,10 +82,12 @@ def indexP(request):
         'manhole': manhole,
         'predict': predict_results,
     }
+    # context 인자를 test/main.html로 넘겨준다.
     return render(request, 'test/main.html', context=context)
 
 
 def apitest(request):
+    # datetime을 이용하여 현재 연월일시분 추출
     now = datetime.now()
     year = now.year
     month = now.month
@@ -130,7 +140,6 @@ def apitest(request):
 
 
     test = pd.merge(busan_dong_base, finaldf, left_on=['X', 'Y'], right_on=['X', 'Y'], how='left')
-    print(test)
     # test = test.drop(columns='Unnamed: 0')
     model = joblib.load('ensemble.pkl')
     column = test.columns
@@ -165,4 +174,6 @@ def apitest(request):
         'result2': result2,
         'result3': result3,
     }
+    
+    # context 인자를 apitest/main.html로 넘겨준다.
     return render(request, 'apitest/main.html', context=context)

@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Busan{% endblock %}
-
+{% block title %}부산 지역 구단위 정보{% endblock %}
 
 {% block extra-script %}
     <link rel="stylesheet" href="{% static 'busanMap/stylesheet/map.css' %}">
 
+    {# d3 import #}
     <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
+    {# map.js import #}
     <script src="{% static 'busanMap/script/map.js' %}"></script>
 
     <script>
         var BUSAN_JSON_DATA_URL = "{% static 'busanMap/busan_sig.json' %}",
             TEST_SPOT_JSON_DATA_URL = "{% static 'busanMap/testSpots.json' %}";
         function initialize() {
-
+            // chart.js에서 사용하였던 dataset을
+            // d3.js에서 이용하기 위해 딕셔너리로 넘겨줌
             var dict_a = {};
             for(var i=0; i<mydata.labels.length; i++)
             {
@@ -40,10 +42,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
+        // mychart
         var ctx = document.getElementById('myChart').getContext('2d');
         var mydata = {
+            // map.py에서 넘겨받은 context들을 이용
             labels: {{ zone|safe }},
             datasets: [{
+                // xAxisID : 밑에서 정의한 chart option의 scales
                 label: '불투수면',
                 backgroundColor: 'rgb(109,177,0)',
                 borderColor: 'rgb(109,177,0)',
@@ -64,10 +69,10 @@
             }]
         };
         var chart = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: mydata,
+            type: 'horizontalBar', // 수평 막대그래프
+            data: mydata, // 위에서 저장한 mydata를 chart data로 사용
             options: {
-                scales: {
+                scales: { // 각 항목별로 막대그래프 수치 범위를 지정해줌
                     xAxes: [{
                         id: 'A',
                         type: 'linear',
@@ -102,6 +107,7 @@
                 barValueSpacing: 20,
             }
         });
+        // 초기 막대그래프 숨김상태로 지정
         chart.data.datasets.forEach(function (d) {
             d.hidden = !d.hidden;
         });
@@ -109,6 +115,7 @@
     </script>
 {% endblock %}
 {% block body %}
+    {# body에서 initialize 호출 #}
     onload="initialize()"
 {% endblock %}
 
@@ -120,6 +127,7 @@
             </div>
         </div>
         <div class="col-lg-8">
+            {# 지도표시 #}
             <div id="map"></div>
         </div>
     </div>

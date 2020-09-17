@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Busan{% endblock %}
+{% block title %}실시간 침수 위험도 보기{% endblock %}
 
 
 {% block extra-script %}
     <link rel="stylesheet" href="{% static 'apitest/stylesheet/map.css' %}">
 
+    {# d3 import #}
     <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transition/1.1.1/d3-transition.js"></script>
+    {# map.js import #}
     <script src="{% static 'apitest/script/map.js' %}"></script>
 
     <script>
         var BUSAN_JSON_DATA_URL = "{% static 'apitest/emd.json' %}",
             TEST_SPOT_JSON_DATA_URL = "{% static 'apitest/testSpots.json' %}";
-        var dict_0 = {};
 
         // 시간 별 데이터를 만드는 딕셔너리 생성 함수
         function data_to_dict(dict_a, a) {
@@ -25,8 +26,8 @@
         }
 
         function initialize() {
-            // 각 데이터들 (아래 script에 있는 mydata (차트 만들 때 썼던 데이터) )를 딕셔너리로 만들어 busan_dong_map에 인자로 넘겨줌
-
+            // 각 데이터들 (아래 script에 있는 mydata (차트 만들 때 썼던 데이터) )를 딕셔너리로 만들어
+            // busan_dong_map에 인자로 넘겨줌
             var dict_0 = {}, dict_1 = {}, dict_2 = {}, dict_3 = {};
             data_to_dict(dict_0, 0); // 현재
             data_to_dict(dict_1, 1); // 1시간후
@@ -40,10 +41,9 @@
         }
 
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
         var mydata = {
+            // map.py에서 넘겨받은 context들을 이용
             labels: {{ dong|safe }},
             datasets: [{
                 label: 'result0',
@@ -71,6 +71,7 @@
     </script>
 {% endblock %}
 {% block body %}
+    {# body에서 initialize 호출 #}
     onload="initialize()"
 {% endblock %}
 
@@ -78,11 +79,9 @@
     <h1 id='title'></h1>
 
     <div class="row center-block">
-        <div class="col-lg-4">
-{#           <br><br><br><br><br>#}
-{#            <img src="{% static 'realmc.jpg' %}" style="height : 50%; border-width:5px; border-color:white; border-style:dashed;" width="">#}
-        </div>
+        <div class="col-lg-4"></div>
         <div class="col-lg-5">
+            {# 지도표시 #}
             <div id="map"></div>
         </div>
     </div>
