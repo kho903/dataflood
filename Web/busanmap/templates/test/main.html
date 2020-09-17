@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Busan{% endblock %}
+
+
+{% block extra-script %}
+    <link rel="stylesheet" href="{% static 'modeltest/stylesheet/map.css' %}">
+
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transition/1.1.1/d3-transition.js"></script>
+    <script src="{% static 'modeltest/script/map.js' %}"></script>
+
+    <script>
+        var BUSAN_JSON_DATA_URL = "{% static 'modeltest/emd.json' %}",
+            TEST_SPOT_JSON_DATA_URL = "{% static 'modeltest/testSpots.json' %}";
+
+        function initialize() {
+            // 각 데이터들 (아래 script에 있는 mydata (차트 만들 때 썼던 데이터) )를 딕셔너리로 만들어 busan_dong_map에 인자로 넘겨줌
+
+            var dict_high = {}; // 고도
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_high[mydata.labels[i]] = mydata.datasets[0].data[i];
+            }
+            var dict_pump = {}; // 펌프
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_pump[mydata.labels[i]] = mydata.datasets[1].data[i];
+            }
+            var dict_manhole = {}; // 맨홀
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_manhole[mydata.labels[i]] = mydata.datasets[2].data[i];
+            }
+            var dict_imp = {}; // 불투수면
+            for (var i = 0; i < mydata.labels.length; i++) {
+                dict_imp[mydata.labels[i]] = mydata.datasets[3].data[i];
+            }
+            var dict_predict = [];
+            for (var j = 0; j < 28; j++) {
+                hour_predict = {};
+                for (var i = 0; i < Rdong.length; i++) {
+                    hour_predict[Rdong[i]] = predicts[j][i];
+                }
+                dict_predict[j] = hour_predict;
+            }
+            var count = 0;
+
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
+                // map.js
+                busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp, dict_predict);
+            });
+            var timer = d3.interval(function (e) {
+                str = '2020년 7월 23일 ' + count + '시';
+                if (count > 23) {
+                    date = '2020년 7월 24일 ';
+                    time = count - 24;
+                    str = date + time + '시'
+                }
+                a = document.getElementById('title');
+                a.innerHTML = str;
+                count++;
+                if (count > 27)
+                    count = 0;
+                if (e < 11200) {
+                    colorchange(dict_predict, count)
+                } else {
+                    timer.stop()
+                }
+            }, 400)
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+        var mydata = {
+            labels: {{ dong|safe }},
+            datasets: [{
+                label: '고도',
+                data: {{ high|safe }}
+            },
+                {
+                    label: '펌프',
+                    data: {{ pump|safe }}
+                }, {
+                    label: '맨홀',
+                    data: {{ manhole|safe }}
+                },
+                {
+                    label: '불투수면',
+                    data: {{ imp|safe }}
+                }]
+        };
+        var predicts = {{predict}};
+        var Rdong = {{Rdong|safe}};
+
+    </script>
+{% endblock %}
+{% block body %}
+    onload="initialize()"
+{% endblock %}
+
+{% block content %}
+    <h1 id='title'></h1>
+
+
+    <div class="row">
+        <div class='col-lg-4 d-none d-xl-block'>
+            <br><br>
+            <table id="leg" style="float:right">
+                <tr>
+                    <td style="background-color: rgb(255, 0, 0); color:white" value='100%'>100%</td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 10, 10)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 20, 20)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 31, 31)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 41, 41)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 51, 51)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 61, 61)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 71, 71)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 82, 82)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 92, 92)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 102, 102)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 112, 112)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 122, 122)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color:rgb(255, 133, 133)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 143, 143)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 153, 153)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 163, 163)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 173, 173)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 184, 184)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 194, 194)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 204, 204)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 214, 214)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 224, 224)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 235, 235)"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(255, 255, 255); color:rgb(255, 0, 0); text-align: center;">0%</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-8">
+            <div id="map"></div>
+        </div>
+    </div>
+
+{% endblock %}
