@@ -2,11 +2,11 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
-        busan = 'emd';
+        busan = 'emd'; // 부산 지도 정보가 들어있는 json파일 import
 
     var projection, path, svg,
         geoJson, features, bounds, center,
-        map, places;
+        map; // 변수 지정
 
     function create(callback) {
         HEIGHT = window.innerHeight;
@@ -55,6 +55,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_predict) {
                         .text(d.properties.EMD_KOR_NM);
                 })
                 .on('mouseout', function () {
+                    // 마우스가 지도 위에 올라가 있지 않을 때 hidden
                     tooltip.classed('hidden', true);
                 })
                 .attr("class", function (d) {

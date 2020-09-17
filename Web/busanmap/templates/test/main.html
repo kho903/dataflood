@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{# base.html 파일을 확장하여 base 파일에서 지정한 각 block에 들어갈 내용들을 정의 #}
+
 {% load static %}
 
 {% block title %}Simulation 결과 보기{% endblock %}
@@ -67,6 +69,8 @@
 {% endblock %}
 
 {% block content %}
+    <h1 id='title'></h1>
+
     <div class="row">
         {# 범례생성 #}
         <div class='col-lg-4 d-none d-xl-block'>
