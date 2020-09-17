@@ -8,15 +8,15 @@
 
 ## 3. Frontend
 
-####&#9312; d3.js</li><br>
+#### &#9312; d3.js</li><br>
 - 지도 시각화<br>
 - 각 수치별 지도에 표시<br><br>
 
-####&#9313; chart.js</li><br>
+#### &#9313; chart.js</li><br>
 - 부산지역 구단위 정보페이지에서 불투수면 비율 & 침수빈도 막대그래프 표현<br><br>
 
 
-####&#9314; ETC : Bootstrap, CSS</li>
+#### &#9314; ETC : Bootstrap, CSS</li>
 
 
 ## 4. pandas ##
