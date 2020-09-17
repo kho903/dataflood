@@ -20,22 +20,17 @@ from sklearn.preprocessing import MinMaxScaler
 # check_same_thread=False를 이용하여 오류를  방지
 con = sqlite3.connect('db.sqlite3', check_same_thread=False)
 
+# 밑에서 정의한 각 함수는 busanmap/urls.py 에서 동작
 
 # df = pd.read_sql_query("SELECT * FROM 테이블명", con)
-# 을 이용하여 db에 있는 테이블을 pandas dataframe으로 만들어 사용
-
-def show_busan_map(request):
-    def get():
-        template = loader.get_template('busanmap/main.html')
-        return HttpResponse(template.render())
-
-    if request.method == 'GET':
-        return get()
-    else:
-        return HttpResponse(status=405)
+# 을 이용하여 db에 있는 테이블의 데이터를
+# pandas dataframe으로 만들어 사용
 
 
-def indexPage(request):
+# 부산지역 구단위 정보 페이지
+# 부산 각 구별 불투수면, 펌프, 침수빈도를
+# 그래프와 지도에 표시
+def busan_gu_info(request):
     df = pd.read_sql_query("SELECT * FROM PIH_Merge", con)
 
     # dataframe을 사용하여 각 항목별 context를 추출
@@ -56,8 +51,10 @@ def indexPage(request):
     # context 인자를 busanmap/main.html로 넘겨준다.
     return render(request, 'busanmap/main.html', context=context)
 
-
-def indexP(request):
+# Simulation 결과 보기 페이지
+# 부산지역에서 침수 사고가 있던 7월 23-24일 데이터를 이용하여
+# 그 시간대의 침수위험도를 simulation
+def simulation_result(request):
     df = pd.read_sql_query('SELECT * FROM F_Final_PIH_V1', con)
 
     # dataframe을 사용하여 각 항목별 context를 추출
@@ -86,7 +83,9 @@ def indexP(request):
     # context 인자를 test/main.html로 넘겨준다.
     return render(request, 'test/main.html', context=context)
 
-
+# 실시간 침수 위험도 보기 페이지
+# 실시간으로 기상 데이터를 받아온 뒤
+# 현재시간, +1, 2, 3시간 후의 각 동별 침수 예측
 def apitest(request):
     # datetime을 이용하여 현재 연월일시분 추출
     now = datetime.now()
