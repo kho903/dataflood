@@ -1,4 +1,4 @@
-function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
+function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
@@ -70,11 +70,11 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
                 return 100;
             })
             .attr("cy", function (d, i) {
-                return [290, 320, 350, 380][i];
+                return [290, 320, 350][i];
             })
             .attr("r", "10px")
             .attr("fill", function (d, i) {
-                return ["rgb(109,177,0)", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(255,0,9)"][i]
+                return ["rgb(109,177,0)", "rgb(0, 99, 132)", "rgb(255,0,9)"][i]
             })
             .on('click', spot_clicked_event)
             .transition()
@@ -99,11 +99,6 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
             case 2:
                 color = d3.scaleLinear()
                     .domain([0, 100])
-                    .range(["rgb(250, 219, 255)", "rgb(77, 11, 88)"]);
-                break;
-            case 3:
-                color = d3.scaleLinear()
-                    .domain([0, 100])
                     .range(["rgb(255, 240, 243)", "rgb(255,0,9)"]);
                 break;
         }
@@ -115,16 +110,13 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
             .attr("style", function (d, i) {
                 switch (p) {
                     case 0:
-                        each_level = dict_a[d.properties.SIG_KOR_NM] * 1.5;
+                        each_level = dict_a[d.properties.SIG_KOR_NM] * 130;
                         break;
                     case 1:
-                        each_level = dict_b[d.properties.SIG_KOR_NM] * 250000000;
+                        each_level = dict_b[d.properties.SIG_KOR_NM] * 3000000000;
                         break;
                     case 2:
-                        each_level = dict_c[d.properties.SIG_KOR_NM] * 4000;
-                        break;
-                    case 3:
-                        each_level = dict_d[d.properties.SIG_KOR_NM] * 15;
+                        each_level = dict_c[d.properties.SIG_KOR_NM] * 500;
                         break;
                 }
 

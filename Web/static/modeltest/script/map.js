@@ -1,4 +1,4 @@
-function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manhole, dict_imp, dict_predict) {
+function busan_dong_map(_mapContainerId, _spots) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
@@ -67,13 +67,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                     return "municipality c " + d.properties.EMD_KOR_NM;
                 })
                 .attr("d", path)
-                .on("click", province_clicked_event)
-            // 지도 애니메이션 duration() 시간별로 색깔 각각 지정 후 main.html 에서
-            // 받아온 각 딕셔너리별로 each_level을 정해서 색 변경
-            // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
-            // each_level = dict_**[d.properties.EMD_KOR_NM] 뒤에 수치를 곱하여 [0, 100]단위로 임의 정규화
-
-            ;
+                .on("click", province_clicked_event);
             callback();
         });
     }

@@ -31,24 +31,20 @@ def show_busan_map(request):
 
 def indexPage(request):
     df = pd.read_sql_query("SELECT * FROM PIH_Merge", con)
-    df_lv = pd.read_sql_query("SELECT * FROM F_BIN_WEIGHT_INFO", con)
 
-    df_lv_v = df_lv[['ZONE', 'F_GRADE']].sort_values(by='ZONE', ascending=True)
-    grade = df_lv_v['F_GRADE'].values.tolist()
 
-    df_i = df[['ZONE', 'IMP_SUR_RATIO']].sort_values(by='ZONE', ascending=True)
+    df_v = df[['ZONE', 'F_WEIGHT']].sort_values(by='ZONE', ascending=True)
+    df_i = df[['ZONE', 'Impervious_Surface_Weight']].sort_values(by='ZONE', ascending=True)
     df_p = df[['ZONE', 'PUMP_RATIO']].sort_values(by='ZONE', ascending=True)
-    df_m = df[['ZONE', 'MANHOLES_RATIO']].sort_values(by='ZONE', ascending=True)
     zone = df_i['ZONE'].values.tolist()
-    imp = df_i['IMP_SUR_RATIO'].values.tolist()
+    imp = df_i['Impervious_Surface_Weight'].values.tolist()
     pump = df_p['PUMP_RATIO'].values.tolist()
-    manhole = df_m['MANHOLES_RATIO'].values.tolist()
+    grade = df_v['F_WEIGHT'].values.tolist()
 
     context = {
         'zone': zone,
         'imp': imp,
         'pump': pump,
-        'manhole': manhole,
         'grade': grade
     }
     return render(request, 'busanmap/main.html', context=context)
@@ -97,7 +93,7 @@ def apitest(request):
 
     xycode = pd.read_sql_query('SELECT * FROM xycode', con)
     busan_dong_base = pd.read_sql_query('SELECT * FROM base_data', con)
-
+    busan_dong_base = pd.merge(busan_dong_base, xycode, on='ZONE')
     code = list()
     for i in range(0, xycode.shape[0]):
         code.append(xycode.iloc[i][['X', 'Y']].values.tolist())
@@ -131,13 +127,12 @@ def apitest(request):
     finaldf = finaldf.drop(columns=finalcol)
     a = finaldf.columns
     finaldf = finaldf.rename(columns={a[0]: 'X', a[1]: 'Y', a[2]: '+0', a[3]: '+1', a[4]: '+2', a[5]: '+3'})
+
+
     test = pd.merge(busan_dong_base, finaldf, left_on=['X', 'Y'], right_on=['X', 'Y'], how='left')
+    print(test)
     # test = test.drop(columns='Unnamed: 0')
-<<<<<<< HEAD
-    model = joblib.load('Voting.pkl')
-=======
     model = joblib.load('ensemble.pkl')
->>>>>>> e5470ee6651e3f041bad5492c6645059a7a19972
     column = test.columns
     for i in range(0, 4):
         Testmodel = test[['SLOPE_AVG', 'HIGH', 'PUMP_RATIO', 'IMP_SUR_RATIO', 'MANHOLES_RATIO', column[10 + i]]]
