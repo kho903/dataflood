@@ -7,9 +7,11 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
     var projection, path, svg,
         geoJson, features, bounds, center,
         map, places;
-
+    
+    // d3.js 생성 
     function create(callback) {
         HEIGHT = window.innerHeight;
+
         WIDTH = 1200;
 
         projection = d3.geoMercator().translate([WIDTH / 2, HEIGHT / 2]);
@@ -21,7 +23,6 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
 
         map = svg.append("g").attr("id", "map");
         places = svg.append("g").attr("id", "places");
-
 
         d3.json(BUSAN_JSON_DATA_URL).then(function (_data) {
             geoJson = topojson.feature(_data, _data.objects[busan]);
@@ -45,6 +46,7 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
                 .attr("d", path)
                 .on("click", province_clicked_event);
 
+            // 지도 위에 구 이름 표시
             map.selectAll("text")
                 .data(features)
                 .enter().append("text")
@@ -53,27 +55,31 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
                 })
                 .attr("dy", ".35em")
                 .attr("class", "municipality-label")
-                // .text(function (d) {
-                //     return d.properties.SIG_KOR_NM;
-                // });
+                .text(function (d) {
+                    return d.properties.SIG_KOR_NM;
+                });
 
             callback();
         });
     }
 
+    // 지도 위 circle 표시
     function spotting_on_map() {
         var circles = map.selectAll("circle")
             .data(_spots).enter()
             .append("circle")
             .attr("class", "spot")
             .attr("cx", function (d) {
+                // 표시할 x 좌표
                 return 100;
             })
             .attr("cy", function (d, i) {
+                // 표시할 y 좌표
                 return [290, 320, 350][i];
             })
             .attr("r", "10px")
             .attr("fill", function (d, i) {
+                // circle 색 지정
                 return ["rgb(109,177,0)", "rgb(0, 99, 132)", "rgb(255,0,9)"][i]
             })
             .on('click', spot_clicked_event)
@@ -81,10 +87,14 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
             .ease(d3.easeElastic);
     }
 
-
+    // circle 클릭 이벤트 
+    // 각 구 별로 불투수면, 펌프, 침수빈도 표시
     function spot_clicked_event(d, p) {
         var color;
         var each_level;
+        
+        // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
+
         switch (p) {
             case 0:
                 color = d3.scaleLinear()
