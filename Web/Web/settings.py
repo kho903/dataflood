@@ -38,12 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'd3_korea_map.apps.D3KoreaMapConfig',
-    'chartjs.apps.ChartjsConfig',
     'busanmap.apps.BusanmapConfig',
-    'busan_dong.apps.BusanDongConfig',
-    'modeltest.apps.ModeltestConfig',
-    'apitest.apps.ApitestConfig',
 ]
 
 MIDDLEWARE = [

@@ -13,7 +13,7 @@
 
     <script>
         var BUSAN_JSON_DATA_URL = "{% static 'busanMap/busan_sig.json' %}",
-            TEST_SPOT_JSON_DATA_URL = "{% static 'busan_dong/testSpots.json' %}";
+            TEST_SPOT_JSON_DATA_URL = "{% static 'busanMap/testSpots.json' %}";
         function initialize() {
 
             var dict_a = {};
@@ -134,11 +134,12 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-lg-3" style="float:left; max-height: 700px; max-width: 400px;">
-            <br><br><br><br><br><br>
-            <canvas id="myChart" style="width: 300px; height:700px"></canvas>
+        <div class='col-lg-4 d-none d-xl-block'>
+            <div style="float:right; max-height: 700px; max-width: 400px; margin-top: 100px;">
+                <canvas id="myChart" style="width: 300px; height:700px"></canvas>
+            </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <div id="map"></div>
         </div>
     </div>

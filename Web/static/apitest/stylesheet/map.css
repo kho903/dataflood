@@ -8,6 +8,10 @@ path:hover {
     fill: orange;
 }
 
+#map {
+    margin: 0 auto;
+}
+
 #map .active {
     fill: #2fa4e7;
 }

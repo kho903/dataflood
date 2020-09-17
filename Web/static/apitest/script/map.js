@@ -99,10 +99,14 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .append("circle")
             .attr("class", "spot")
             .attr("cx", function (d, i) {
-                return [100, 150, 200, 250][i];
+                return [
+                    100, 145, 190, 235
+                ][i];
             })
-            .attr("cy", function (d) {
-                return [230];
+            .attr("cy", function (d, i) {
+                return [
+                    230, 230, 230, 230
+                ][i] - 80;
             })
             .attr("r", "20px")
             .attr("fill", function (d, i) {
@@ -117,19 +121,29 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .data(_spots).enter()
             .append("text")
             .attr("dx", function (d, i) {
-                return [100, 150, 200, 250][i] - 3;
+                return [
+                    80, 145, 190, 235
+                ][i] - 5;
             })
             .attr("dy", function (d, i) {
-                console.log(i);
-                return [230, 230, 230, 230][i];
+                return [
+                    230, 230, 230, 230
+                ][i] - 79;
             })
             .attr("class", "spot")
             .style('fill', 'white')
             .style('font-size', '12px')
             .text(function (d, i) {
-                console.log(i);
-                return i;
-            });
+                console.log("d는 ", d, "i", i);
+                if (i === 0)
+                    return "0";
+                else if (i === 1)
+                    return "1";
+                else if (i === 2)
+                    return "2";
+                else if (i === 3)
+                    return "3";
+            })
     }
 
     function spot_clicked_event(d, p) {
