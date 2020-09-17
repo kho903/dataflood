@@ -31,21 +31,18 @@ con = sqlite3.connect('db.sqlite3', check_same_thread=False)
 # 부산 각 구별 불투수면, 펌프, 침수빈도를
 # 그래프와 지도에 표시
 def busan_gu_info(request):
-    df = pd.read_sql_query("SELECT * FROM PIH_Merge", con)
+    df = pd.read_sql_query("SELECT * FROM sig_info_weight", con)
 
     # dataframe을 사용하여 각 항목별 context를 추출
     df_v = df[['ZONE', 'F_WEIGHT']].sort_values(by='ZONE', ascending=True)
     df_i = df[['ZONE', 'Impervious_Surface_Weight']].sort_values(by='ZONE', ascending=True)
-    df_p = df[['ZONE', 'PUMP_RATIO']].sort_values(by='ZONE', ascending=True)
     zone = df_i['ZONE'].values.tolist()
     imp = df_i['Impervious_Surface_Weight'].values.tolist()
-    pump = df_p['PUMP_RATIO'].values.tolist()
     grade = df_v['F_WEIGHT'].values.tolist()
 
     context = {
         'zone': zone,
         'imp': imp,
-        'pump': pump,
         'grade': grade
     }
     # context 인자를 busanmap/main.html로 넘겨준다.
@@ -102,7 +99,7 @@ def apitest(request):
     minute = '30'
 
     xycode = pd.read_sql_query('SELECT * FROM xycode', con)
-    busan_dong_base = pd.read_sql_query('SELECT * FROM base_data', con)
+    busan_dong_base = pd.read_sql_query('SELECT * FROM busan_base_data', con)
     busan_dong_base = pd.merge(busan_dong_base, xycode, on='ZONE')
     code = list()
     for i in range(0, xycode.shape[0]):
