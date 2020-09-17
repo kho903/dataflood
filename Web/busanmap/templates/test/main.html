@@ -29,7 +29,7 @@
 
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
                 // map.js
-                busan_dong_map('#map', _data);
+                busan_dong_map('#map', _data, dict_predict);
             });
             var timer = d3.interval(function (e) {
                 str = '2020년 7월 23일 ' + count + '시';
