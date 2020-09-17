@@ -55,7 +55,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
                     var mouse = d3.mouse(svg.node()).map(function (d) {
                         return parseInt(d);
                     });
-                    console.log(mouse);
                     tooltip.classed('hidden', false)
                         .attr('style', 'left:' + (mouse[0] + 35) +
                             'px; top:' + (mouse[1] - 35) + 'px')
@@ -73,19 +72,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             // 받아온 각 딕셔너리별로 each_level을 정해서 색 변경
             // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
             // each_level = dict_**[d.properties.EMD_KOR_NM] 뒤에 수치를 곱하여 [0, 100]단위로 임의 정규화
-            map.selectAll("text")
-                .data(features)
-                .enter().append("text")
-                .attr("transform", function (d) {
-                    return "translate(" + path.centroid(d) + ")";
-                })
-                .attr("dy", ".35em")
-                .attr("class", "municipality-label")
-            // 지도에 모든 동 이름을 표시 (동이 너무 많아 복잡)
-            // .text(function (d) {
-            //     return d.properties.EMD_KOR_NM;
-            // })
-            ;
 
             callback();
         });
@@ -122,8 +108,8 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .append("text")
             .attr("dx", function (d, i) {
                 return [
-                    80, 145, 190, 235
-                ][i] - 5;
+                    100, 145, 190, 235
+                ][i] - 3;
             })
             .attr("dy", function (d, i) {
                 return [
@@ -134,7 +120,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_0, dict_1, dict_2, dict_3)
             .style('fill', 'white')
             .style('font-size', '12px')
             .text(function (d, i) {
-                console.log("d는 ", d, "i", i);
                 if (i === 0)
                     return "0";
                 else if (i === 1)
