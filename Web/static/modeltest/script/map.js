@@ -1,4 +1,4 @@
-function busan_dong_map(_mapContainerId, _spots) {
+function busan_dong_map(_mapContainerId, _spots, dict_predict) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
