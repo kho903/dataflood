@@ -2,11 +2,11 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
-        busan = 'busan_sig';
+        busan = 'busan_sig'; // 부산 지도 정보가 들어있는 json파일 import
 
     var projection, path, svg,
         geoJson, features, bounds, center,
-        map, places;
+        map; // 변수 지정
     
     // d3.js 생성 
     function create(callback) {
@@ -22,7 +22,6 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
             .attr("height", HEIGHT);
 
         map = svg.append("g").attr("id", "map");
-        places = svg.append("g").attr("id", "places");
 
         d3.json(BUSAN_JSON_DATA_URL).then(function (_data) {
             geoJson = topojson.feature(_data, _data.objects[busan]);
