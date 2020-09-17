@@ -31,12 +31,12 @@
             {
                 dict_c[mydata.labels[i]] = mydata.datasets[2].data[i];
             }
-
+            /*
             var dict_d = {};
             for(var i=0; i<mydata.labels.length; i++)
             {
                 dict_d[mydata.labels[i]] = mydata.datasets[3].data[i];
-            }
+            }*/
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
                 busan_map('#map', _data, dict_a, dict_b, dict_c, dict_d);
             });
@@ -61,13 +61,13 @@
                 borderColor: 'rgb(0, 99, 132)',
                 xAxisID: 'B',
                 data: {{ pump|safe }}
-            }, {
+            }, /*{
                 label: '맨홀',
                 backgroundColor: 'rgb(77, 11, 88)',
                 borderColor: 'rgb(77, 11, 88)',
                 xAxisID: 'C',
                 data: {{ manhole|safe }}
-            }, {
+            }, */{
                 label: '침수빈도',
                 backgroundColor: 'rgb(255,0,9)',
                 borderColor: 'rgb(255,0,9)',
@@ -96,7 +96,7 @@
                             max: 4.3E-07,
                             min: 0
                         }
-                    }, {
+                    }, /*{
                         id: 'C',
                         type: 'linear',
                         position: 'right',
@@ -104,7 +104,7 @@
                             max: 0.028,
                             min: 0
                         }
-                    }, {
+                    }, */{
                         id: 'D',
                         type: 'linear',
                         position: 'right',

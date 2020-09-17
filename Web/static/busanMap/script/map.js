@@ -123,9 +123,9 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
                     case 2:
                         each_level = dict_c[d.properties.SIG_KOR_NM] * 4000;
                         break;
-                    case 3:
-                        each_level = dict_d[d.properties.SIG_KOR_NM] * 15;
-                        break;
+                    // case 3:
+                    //     each_level = dict_d[d.properties.SIG_KOR_NM] * 15;
+                    //     break;
                 }
 
                 return "fill: " + color(Math.ceil(each_level));
