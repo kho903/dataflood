@@ -25,8 +25,8 @@ python 3.7.6
 
 # 1. 디렉토리 설명
 
-dataflood<br>
-| <br>
+<strong>dataflood</strong><br>
+---
 ├─Data : 프로젝트에 사용되는 데이터 모음<br>
 │  ├─final_data : 최종적으로 사용 용도에 따라서 응용될 데이터<br>
 │  │  ├─DB : for Django<br>
