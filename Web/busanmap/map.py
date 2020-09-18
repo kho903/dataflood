@@ -37,13 +37,16 @@ def busan_gu_info(request):
     # dataframe을 사용하여 각 항목별 context를 추출
     df_v = df[['ZONE', 'F_WEIGHT']].sort_values(by='ZONE', ascending=True)
     df_i = df[['ZONE', 'Impervious_Surface_Weight']].sort_values(by='ZONE', ascending=True)
+    df_p = df[['ZONE', 'PUMP_RATIO']].sort_values(by='ZONE', ascending=True)
     zone = df_i['ZONE'].values.tolist()
     imp = df_i['Impervious_Surface_Weight'].values.tolist()
+    pump = df_p['PUMP_RATIO'].values.tolist()
     grade = df_v['F_WEIGHT'].values.tolist()
 
     context = {
         'zone': zone,
         'imp': imp,
+        'pump': pump,
         'grade': grade
     }
     # context 인자를 busanmap/main.html로 넘겨준다.
