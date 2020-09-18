@@ -165,7 +165,6 @@ def apitest(request):
         k = pd.Series(item)
         a = pd.concat([test, k], axis=1)
         test['result' + str(i)] = k
-    print(test)
     result0 = test['result0'].values.tolist()
     result1 = test['result1'].values.tolist()
     result2 = test['result2'].values.tolist()
