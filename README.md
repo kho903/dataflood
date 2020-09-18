@@ -15,7 +15,7 @@ python 3.7.6
 
 # 목차
 
-1. [개요 및 디렉토리 설명](#1-개요-및-디렉토리-설명)
+1. [디렉토리 설명](#1-디렉토리-설명)
 2. [데이터 수집](#2-데이터-수집)
 3. [전처리 과정 및 데이터 flow](#3-전처리-과정-및-데이터-flow)
 4. [Machine Learning](#4-machine-learning)
@@ -23,7 +23,38 @@ python 3.7.6
 6. [Django](#6-webdjango)
 7. [실행 방법](#7-실행방법)
 
-# 1. 개요 및 디렉토리 설명
+# 1. 디렉토리 설명
+
+dataflood<br>
+| <br>
+├─Data : 프로젝트에 사용되는 데이터 모음<br>
+│  ├─final_data : 최종적으로 사용 용도에 따라서 응용될 데이터<br>
+│  │  ├─DB : for Django<br>
+│  │  ├─model : 추후 모델이 필요할 시 사용<br>
+│  │  │  ├─geo_model<br>
+│  │  │  └─video_model<br>
+│  │  └─training : 학습에 사용 될 데이터<br>
+│  │      ├─cctv_data : 영상 학습 용 데이터 <br>
+│  │      │  ├─flood<br>
+│  │      │  ├─flood_clahe<br>
+│  │      │  ├─no_flood_new<br>
+│  │      │  ├─no_flood_new_clahe<br>
+│  │      │  └─video<br>
+│  │      └─geo_data : 머신 러닝 학습 용 데이터<br>
+│  ├─processing_data : 전처리 되면서 만들어지는 데이터<br>
+│  │  ├─1st : 1차 가공<br>
+│  │  └─2nd : 2차 가공( 추후 활용되어 final_data 또는 training_data로 변경)<br>
+│  └─rawdata<br>
+│  <br>
+├─ML_model_code : 모델 학습 코드<br>
+|  | <br>
+│  ├─Geo_Model<br>
+│  │  <br>
+│  └─Video_Model<br>
+│      <br>
+├─Processing_code : 전처리 및 django DB data 생성용 코드<br>
+│  <br>
+└─Web : Django 코드<br>
 
 
 # 2. 데이터 수집
