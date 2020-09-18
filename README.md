@@ -239,25 +239,29 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
  
  
 # 7. 실행방법
-anaconda Prompt (anaconda3) 또는 그에 맞는 환경
+anaconda Prompt (anaconda3) 또는 그에 맞는 환경<br>
+( 가상환경 내에 필요한 환경 구축 )
 
+    # 가상환경 설치 (virtualenv가 깔려 있지 않은 경우)
+    C:/..../dataflood/dataflood> pip install virtualenv
 
-    # 가상환경 생성 (python version 3.7.6 에 맞추어야함.)
-    C:/..../dataflood> virtualenv --python=python3.7.6 venv ([가상환경이름])
+    # 가상환경 venv 생성 (python version 3.7.6 에 맞추어야함.) => (tesnsorflow를 실행하기 위해)
+    C:/..../dataflood/dataflood> virtualenv --python=python3.7.6 venv
     
-    # 가상환경 활성화 (in window)
-    C:/..../dataflood> venv\Scripts\activate 
+    # 가상환경 활성화 (in Windows)
+    C:/..../dataflood/dataflood> venv\Scripts\activate 
     
-    # 가상환경 내에 requirements 설치
-    (venv) C:/..../dataflood> pip install -r requirements.txt
+    # 가상환경 내에 requirements.txt 설치 ( 필요한 라이브러리들을 모아놓은 데이터 )
+    # 다음과 같은 커맨드를 사용하여 requirements를 한번에 설치 가능
+    (venv) C:/..../dataflood/dataflood> pip install -r requirements.txt
     
     # 전처리 코드 및 ML 코드
-    C:/..../dataflood> jupyter lab 또는 jupyter notebook
+    C:/..../dataflood/dataflood> jupyter lab 또는 jupyter notebook
 
+    # 홈페이지 확인
     # Web 폴더로 이동 후 django runserver
-    
-    (venv) C:/..../dataflood> cd Web
-    (venv) C:/..../dataflood/Web> python manage.py runserver
+    (venv) C:/..../dataflood/dataflood> cd Web
+    (venv) C:/..../dataflood/dataflood/Web> python manage.py runserver
     Watching for file changes with StatReloader
     Performing system checks...
     
