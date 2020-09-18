@@ -1,19 +1,29 @@
 # Data Flood
+데이터청년 캠퍼스 부산대학교 프로젝트<br>
+2020년 07월 발생한 초량 제1지하차도 침수사건으로 인명피해가 발생하였다<br>
+이에 Data Flood 팀은 침수를 예측해보고자 하였다.<br>
+예측 방법은 거시적으로 강수량, 지형 정보, 펌프 및 불투수면, 침수 이력을 통해<br>
+캠퍼스 기간 동안 학습한 머신러닝을 통해 예측해보고자 하였고<br>
+미시적으로 cctv 영상을 학습시켜 확실하게 실시간으로 예측하고자 하였다<br>
+두 방법은 서로 상호보완적으로 침수 예방에 도움을 줄 수 있을 것이다.<br> 
+<br>
+데이터 수집 및 전처리 과정과 학습 방법 그리고 웹(django)에 대해 설명.<br>
+실행방법은 [7.실행방법](#7-실행방법)참조 <br>
 
-
-데ㅇ랑러ㅏㅇ
+<br>
+python 3.7.6 
 
 # 목차
 
-1. [개요 및 디렉토리 설명](#introduction)
-2. [데이터 수집](#data_collect)
-3. [전처리 과정 및 데이터 flow](#preprocessing)
-4. [Machine Learning](#geo_machine_learning)
-5. [영상 Machine Learning](#video_learning)
-6. [Django](#django)
-7. [실행 방법](#howto)
+1. [개요 및 디렉토리 설명](#1-개요-및-디렉토리-설명)
+2. [데이터 수집](#2-데이터-수집)
+3. [전처리 과정 및 데이터 flow](#3-전처리-과정-및-데이터-flow)
+4. [Machine Learning](#4-machine-learning)
+5. [영상 Machine Learning](#5-영상-machine-learning)
+6. [Django](#6-webdjango)
+7. [실행 방법](#7-실행방법)
 
-# 1. 개요 및 디렉토리 설명 <a name="introduction></a>
+# 1. 개요 및 디렉토리 설명
 
 
 # 2. 데이터 수집
