@@ -14,6 +14,7 @@ import sklearn
 import pickle
 import joblib
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.decomposition import PCA   
 
 # sqlite3 데이터베이스를 사용하기 위해 불러온다.
 # 같은 파일 내에서 db가 생성되지 않았기 때문에 
@@ -63,6 +64,7 @@ def simulation_result(request):
     manhole = df2['MANHOLES_RATIO'].values.tolist()
 
     df = pd.read_sql_query('SELECT * FROM Realfinal', con)
+    #df = pd.read_csv('Simulation_Result.csv')
     Rdong = df['Dong'].values.tolist()
     predict_results = []
     for i in range(0, 28):
@@ -99,7 +101,8 @@ def apitest(request):
     minute = '30'
 
     xycode = pd.read_sql_query('SELECT * FROM xycode', con)
-    busan_dong_base = pd.read_sql_query('SELECT * FROM busan_base_data', con)
+    #busan_dong_base = pd.read_sql_query('SELECT * FROM busan_base_data', con)
+    busan_dong_base = pd.read_csv('busan_base_data.csv')
     busan_dong_base = pd.merge(busan_dong_base, xycode, on='ZONE')
     code = list()
     for i in range(0, xycode.shape[0]):
@@ -133,17 +136,26 @@ def apitest(request):
     finalcol = finalcol[6:]
     finaldf = finaldf.drop(columns=finalcol)
     a = finaldf.columns
-    finaldf = finaldf.rename(columns={a[0]: 'X', a[1]: 'Y', a[2]: '+0', a[3]: '+1', a[4]: '+2', a[5]: '+3'})
+    finaldf = finaldf.rename(columns={a[0]: 'X', a[1]: 'Y', a[2]: '0', a[3]: '1', a[4]: '2', a[5]: '3'})
+    finaldf['+0'] = rain_weight(finaldf['0'])
+    finaldf['+1'] = rain_weight(finaldf['1'])
+    finaldf['+2'] = rain_weight(finaldf['2'])
+    finaldf['+3'] = rain_weight(finaldf['3'])
 
     test = pd.merge(busan_dong_base, finaldf, left_on=['X', 'Y'], right_on=['X', 'Y'], how='left')
     # test = test.drop(columns='Unnamed: 0')
     model = joblib.load('ensemble.pkl')
     column = test.columns
     for i in range(0, 4):
-        Testmodel = test[['SLOPE_AVG', 'HIGH', 'PUMP_RATIO', 'IMP_SUR_RATIO', 'MANHOLES_RATIO', column[10 + i]]]
+        Testmodel = test[[column[10 + i],'Impervious_Surface_Weight','SLOPE_AVG_Weight', 'HIGH_Weight', 'F_WEIGHT' ]]
         scaler = MinMaxScaler()
         scaler.fit(Testmodel)
         Testmodel = scaler.transform(Testmodel)
+
+        pca = PCA(n_components=4)
+        printcipalComponents = pca.fit_transform(Testmodel)
+        Testmodel = pd.DataFrame(data=printcipalComponents, columns = ['principal component1', 'principal component2','principal component3', 'principal component4'])
+
         y_pred = model.predict_proba(Testmodel)
         item = list()
         for k in y_pred:
@@ -151,12 +163,12 @@ def apitest(request):
         k = pd.Series(item)
         a = pd.concat([test, k], axis=1)
         test['result' + str(i)] = k
-
+    print(test)
     result0 = test['result0'].values.tolist()
     result1 = test['result1'].values.tolist()
     result2 = test['result2'].values.tolist()
     result3 = test['result3'].values.tolist()
-    dong = test['Dong'].values.tolist()
+    dong = test['DONG'].values.tolist()
 
     context = {
         'year': year,
@@ -173,3 +185,18 @@ def apitest(request):
 
     # context 인자를 apitest/main.html로 넘겨준다.
     return render(request, 'apitest/main.html', context=context)
+
+def rain_weight(rain_info):
+    weight_data = rain_info.copy()
+    for idx,col in enumerate(rain_info):
+        if col <= 15:
+            weight_data[idx] = col / (46)
+        elif col > 15 and col <= 35:
+            weight_data[idx] = col / (18 * 2**2)
+        elif col > 35 and col <= 60:
+            weight_data[idx] = col / (17 * 3**2)
+        elif col > 60 and col <= 80:
+            weight_data[idx] = col / (11 * 4**2)
+        elif col > 80:
+            weight_data[idx] = col / (6.28 * 5**2)
+    return weight_data
