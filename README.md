@@ -1,30 +1,23 @@
-# Readme.md
-
 # Data Flood
 
----
 
 데ㅇ랑러ㅏㅇ
 
 # 목차
 
----
-
-1. 개요 및 디렉토리 설명
-2. 데이터 수집
-3. 전처리 과정 및 데이터 flow
-4. Machine Learning
-5. 영상 Machine Learning
-6. Django
-7. 실행 방법
+1. 개요 및 디렉토리 설명(#1.-개요-및-디렉토리-설명)
+2. 데이터 수집(#1.-개요-및-디렉토리-설명)
+3. 전처리 과정 및 데이터 flow(#3.-전처리-과정-및-데이터-flow)
+4. Machine Learning(#4.-machine-learning)
+5. 영상 Machine Learning(#5.-영상-machine-learning)
+6. Django(#6.-django)
+7. 실행 방법(#7.-실행-방법)
 
 # 1. 개요 및 디렉토리 설명
 
----
 
 # 2. 데이터 수집
 
----
 
 모델 학습에 필요한 데이터 수집은 아래의 주소에서 다운 받아 편의상 이름을 변경하여 사용하였다.
 해당 데이터들은 Data/raw_data 에 저장한다.
@@ -61,16 +54,15 @@ FL_TIMERAIN.csv
 
 # 3. 전처리 과정 및 데이터 flow
 
----
 
 전처리 과정 및 데이터 flow의 개요는 다음과 같다
 위의 Raw, Processing Data( 1st, 2nd ) , Final Data( DB, training, model ) 각각 파일명이며 자세한 내용은 1을 참조한다.
 
 ![Readme%20md%2099629370fe664b84b98f21911af9cff2/file.png](Readme%20md%2099629370fe664b84b98f21911af9cff2/file.png)
 
-전처리 : Processing_code 내부 1, 2, 3, 4 참조
-학습코드 : ML_model_code > GeoModel > Geo_ML 참조
-Django DB용 코드 : Processing_code 내부 for_Django_DB 참조
+전처리 : Processing_code 내부 1, 2, 3, 4 참조<br>
+학습코드 : ML_model_code > GeoModel > Geo_ML 참조<br>
+Django DB용 코드 : Processing_code 내부 for_Django_DB 참조<br>
 
 ### 전처리 과정
 
@@ -97,14 +89,13 @@ Django DB용 코드 : Processing_code 내부 for_Django_DB 참조
 ---
 
 각각 주피터파일을 통해 전처리과정 순서대로 진행되어 파일이 생성되며, (단, QGIS로 생성된 busan_flood_geo 와 busan_Uflood_geo, busan_rain_data_mod는 제외) 마지막에 도착한
-Final data 폴더에 사용 용도에 따라 저장된다. 
- training_data : 모델 학습을 위해 사용
- DB : 이후 Web 파트에서 데이터베이스를 위해 사용
- model : Web또는 추후 사용을 위해 모델을 따로 저장
+Final data 폴더에 사용 용도에 따라 저장된다. <br>
+ training_data : 모델 학습을 위해 사용<br>
+ DB : 이후 Web 파트에서 데이터베이스를 위해 사용<br>
+ model : Web또는 추후 사용을 위해 모델을 따로 저장<br>
 
 # 4. Machine Learning
 
----
 
 ### 4.1 Geo_ML
 
