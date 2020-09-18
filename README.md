@@ -5,15 +5,15 @@
 
 # 목차
 
-1. [개요 및 디렉토리 설명](#1.-개요-및-디렉토리-설명)
-2. [데이터 수집](#1.-개요-및-디렉토리-설명)
-3. [전처리 과정 및 데이터 flow](#3.-전처리-과정-및-데이터-flow)
-4. [Machine Learning](#4.-machine-learning)
-5. [영상 Machine Learning](#5.-영상-machine-learning)
-6. [Django](#6.-django)
-7. [실행 방법](#7.-실행-방법)
+1. [개요 및 디렉토리 설명](#introduction)
+2. [데이터 수집](#data_collect)
+3. [전처리 과정 및 데이터 flow](#preprocessing)
+4. [Machine Learning](#geo_machine_learning)
+5. [영상 Machine Learning](#video_learning)
+6. [Django](#django)
+7. [실행 방법](#howto)
 
-# 1. 개요 및 디렉토리 설명
+# 1. 개요 및 디렉토리 설명 <a name="introduction></a>
 
 
 # 2. 데이터 수집
