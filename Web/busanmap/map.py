@@ -64,7 +64,7 @@ def simulation_result(request):
     manhole = df2['MANHOLES_RATIO'].values.tolist()
 
     df = pd.read_sql_query('SELECT * FROM Realfinal', con)
-    #df = pd.read_csv('Simulation_Result.csv')
+    # df = pd.read_sql_query('SELECT * FROM Simulation_Result', con)
     Rdong = df['Dong'].values.tolist()
     predict_results = []
     for i in range(0, 28):
@@ -101,8 +101,7 @@ def apitest(request):
     minute = '30'
 
     xycode = pd.read_sql_query('SELECT * FROM xycode', con)
-    #busan_dong_base = pd.read_sql_query('SELECT * FROM busan_base_data', con)
-    busan_dong_base = pd.read_csv('busan_base_data.csv')
+    busan_dong_base = pd.read_sql_query('SELECT * FROM busan_base_data', con)
     busan_dong_base = pd.merge(busan_dong_base, xycode, on='ZONE')
     code = list()
     for i in range(0, xycode.shape[0]):
