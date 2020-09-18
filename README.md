@@ -239,3 +239,28 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
  
  
 # 7. 실행방법
+anaconda Prompt (anaconda3)
+
+    # 가상환경 생성
+    C:/..../dataflood> virtualenv --python=python3.6 venv ([가상환경이름])
+    
+    # 가상환경 활성화
+    C:/..../dataflood> venv\Scripts\activate 
+    
+    # 가상환경 내에 requirements 설치
+    (venv) C:/..../dataflood> pip install -r requirements.txt
+    
+    # Web 폴더로 이동 후 django runserver
+    
+    (venv) C:/..../dataflood> cd Web
+    (venv) C:/..../dataflood/Web> python manage.py runserver
+    Watching for file changes with StatReloader
+    Performing system checks...
+    
+    System check identified no issues (0 silenced).
+    September 18, 2020 - 16:19:18
+    Django version 3.0.3, using settings 'Web.settings'
+    Starting development server at http://127.0.0.1:8000/
+    Quit the server with CTRL-BREAK.
+
+URL : http://127.0.0.1:8000/

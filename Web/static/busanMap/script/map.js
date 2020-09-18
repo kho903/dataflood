@@ -1,4 +1,4 @@
-function busan_map(_mapContainerId, _spots, dict_a, dict_b) {
+function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
@@ -81,7 +81,7 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b) {
             .attr("r", "10px")
             .attr("fill", function (d, i) {
                 // circle 색 지정
-                return ["rgb(109,177,0)", "rgb(255,0,9)"][i]
+                return ["rgb(109,177,0)", "rgb(0, 99, 132)", "rgb(255,0,9)"][i]
             })
             .on('click', spot_clicked_event)
             .transition()
@@ -105,6 +105,11 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b) {
             case 1:
                 color = d3.scaleLinear()
                     .domain([0, 100])
+                    .range(["rgb(184, 237, 255)", "rgb(0, 99, 132)"]);
+                break;
+            case 2:
+                color = d3.scaleLinear()
+                    .domain([0, 100])
                     .range(["rgb(255, 240, 243)", "rgb(255,0,9)"]);
                 break;
         }
@@ -117,7 +122,10 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b) {
                         each_level = dict_a[d.properties.SIG_KOR_NM] * 130;
                         break;
                     case 1:
-                        each_level = dict_b[d.properties.SIG_KOR_NM] * 500;
+                        each_level = dict_b[d.properties.SIG_KOR_NM] * 300000000;
+                        break;
+                    case 2:
+                        each_level = dict_c[d.properties.SIG_KOR_NM] * 500;
                         break;
                 }
 
