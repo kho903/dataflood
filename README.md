@@ -11,7 +11,10 @@
 실행방법은 [7.실행방법](#7-실행방법)참조 <br>
 
 <br>
-python 3.7.6 
+python 3.7.6 가상환경
+virtualenv     20.0.31
+
+https://github.com/pcrmcw0486/dataflood
 
 # 목차
 
