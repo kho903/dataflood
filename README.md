@@ -250,7 +250,8 @@ anaconda Prompt (anaconda3) 또는 그에 맞는 환경<br>
     C:/..../project > cd dataflood
     
     # 가상환경 설치 - python virtualenv 사용 또는 conda 가상환경 둘 중 하나 사용
-    # 1. python virtualenv 사용(virtualenv가 깔려 있지 않은 경우)
+    # 1. python virtualenv 사용
+        # virtualenv가 깔려 있지 않은 경우
         C:/..../project/dataflood> pip install virtualenv
     
         # 가상환경 venv 생성 (python version 3.7.6 에 맞추어야함.) => (tesnsorflow를 실행하기 위해)
