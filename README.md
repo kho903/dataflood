@@ -152,7 +152,7 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
 학습에 사용하기위해 4개의 차원으로 줄인 데이터로 변형
 5. 데이터를 train 과 test 로 구분 8 : 2 비율로 나눠줌
 6. bayesianoptimization 을 이용해 사용할 모델들의 최적값을 탐색함
--> 사용된 모델 KNN, SVM, DT, LR
+-> 사용된 모델 KNN, SVM, DT, RF
 각 모델들에 사용되는 옵션의 최적 조합을 탐색
 7. 찾아낸 최적의 조합으로 모델을 만들고 voting 앙상블을 통해
 그 모델들을 묶어서 사용함
@@ -245,15 +245,16 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
  
 ( 가상환경 내에 필요한 환경 구축 )
     
-    # 작업할 폴더로 이동 (project)
+    1. 작업할 폴더 생성 및 폴더로 이동(폴더명 project)
+    C:/.... > mkdir project
     C:/.... > cd project
     
     # git clone(프로젝트 파일을 가져온다.), 해당 프로젝트 폴더로 이동
     C:/..../project > git clone https://github.com/pcrmcw0486/dataflood.git
     C:/..../project > cd dataflood
     
-    # 가상환경 설치 - python virtualenv 사용 또는 conda 가상환경 둘 중 하나 사용
-    # 1. python virtualenv 사용
+    2. 가상환경 설치 - python virtualenv 사용 또는 conda 가상환경 둘 중 하나 사용
+     ① python virtualenv 사용
         # virtualenv가 깔려 있지 않은 경우
         C:/..../project/dataflood> pip install virtualenv
     
@@ -264,7 +265,7 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
         C:/..../dataflood/dataflood> venv\Scripts\activate 
         (venv) C:/..../project/dataflood>
     
-    # 2. conda 가상환경
+     ② conda 가상환경
         (venv) C:/..../project/dataflood>
         # 가상환경 venv 생성 (python version 3.7.6 에 맞추어야함.) => (tesnsorflow를 실행하기 위해)
         C:/..../project/dataflood> conda create -n venv python=3.7.6
@@ -276,15 +277,13 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
         C:/..../project/dataflood> conda activate venv
     
      
-    # 가상환경 내에 requirements.txt 설치 ( 필요한 라이브러리들을 모아놓은 데이터 )
-    # 다음과 같은 명령어를 사용하여 requirements를 한번에 설치 가능
+    3. 가상환경 내에 requirements.txt 설치 ( 필요한 라이브러리들을 모아놓은 데이터 )
+       다음과 같은 명령어를 사용하여 requirements를 한번에 설치 가능
     (venv) C:/..../project/dataflood> pip install -r requirements.txt
     
-    # 전처리 코드 및 ML 코드보기
-    (venv) C:/..../project/dataflood> jupyter lab 또는 jupyter notebook
 
-    # 홈페이지 확인
-    # Web 폴더로 이동 후 django runserver
+    4. 홈페이지 확인
+       # Web 폴더로 이동 후 django runserver
     (venv) C:/..../project/dataflood> cd Web
     (venv) C:/..../project/dataflood/Web> python manage.py runserver
     Watching for file changes with StatReloader
@@ -295,5 +294,9 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
     Django version 3.0.3, using settings 'Web.settings'
     Starting development server at http://127.0.0.1:8000/
     Quit the server with CTRL-BREAK.
+    
+    5. ctrl + c로 django 서버 종료 후 전처리 코드 및 ML 코드보기
+    (venv) C:/..../project/dataflood/Web> cd ..
+    (venv) C:/..../project/dataflood> jupyter lab 또는 jupyter notebook
 
 URL : http://127.0.0.1:8000/
