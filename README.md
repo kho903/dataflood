@@ -106,6 +106,7 @@ FL_TIMERAIN.csv
 
 전처리 : Processing_code 내부 1, 2, 3, 4 참조<br>
 학습코드 : ML_model_code > GeoModel > Geo_ML 참조<br>
+　　　　 　　　　 　　　　> VideoModel > video_ML 참조<br>
 Django DB용 코드 : Processing_code 내부 for_Django_DB 참조<br>
 
 ### 전처리 과정
