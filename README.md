@@ -239,7 +239,10 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
  
  
 # 7. 실행방법
-anaconda Prompt (anaconda3) 또는 그에 맞는 환경<br>
+ python 3.7.6으로 돌아가는 가상환경을 구축하여 사용한다.<br>
+ 가상환경을 만드는 방법은 여럿 존재하나 virtualenv와 conda를 이용한 방법을 제공한다<br>
+ conda 환경을 추천한다.
+ 
 ( 가상환경 내에 필요한 환경 구축 )
     
     # 작업할 폴더로 이동 (project)
