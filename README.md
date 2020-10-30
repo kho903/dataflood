@@ -11,7 +11,10 @@
 실행방법은 [7.실행방법](#7-실행방법)참조 <br>
 
 <br>
-python 3.7.6 
+python 3.7.6 가상환경
+virtualenv     20.0.31
+
+https://github.com/pcrmcw0486/dataflood
 
 # 목차
 
@@ -103,6 +106,7 @@ FL_TIMERAIN.csv
 
 전처리 : Processing_code 내부 1, 2, 3, 4 참조<br>
 학습코드 : ML_model_code > GeoModel > Geo_ML 참조<br>
+　　　　 　　　　 　　　　> VideoModel > video_ML 참조<br>
 Django DB용 코드 : Processing_code 내부 for_Django_DB 참조<br>
 
 ### 전처리 과정
@@ -149,7 +153,7 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
 학습에 사용하기위해 4개의 차원으로 줄인 데이터로 변형
 5. 데이터를 train 과 test 로 구분 8 : 2 비율로 나눠줌
 6. bayesianoptimization 을 이용해 사용할 모델들의 최적값을 탐색함
--> 사용된 모델 KNN, SVM, DT, LR
+-> 사용된 모델 KNN, SVM, DT, RF
 각 모델들에 사용되는 옵션의 최적 조합을 탐색
 7. 찾아낸 최적의 조합으로 모델을 만들고 voting 앙상블을 통해
 그 모델들을 묶어서 사용함
@@ -236,3 +240,74 @@ Final data 폴더에 사용 용도에 따라 저장된다. <br>
  
  
 # 7. 실행방법
+ python 3.7.6으로 돌아가는 가상환경을 구축하여 사용한다.<br>
+ 가상환경을 만드는 방법은 여럿 존재하나 virtualenv와 conda를 이용한 방법을 제공한다<br>
+ conda 환경을 추천한다.
+ 
+( 가상환경 내에 필요한 환경 구축 )
+    
+    1. 작업할 폴더 생성 및 폴더로 이동(폴더명 project)
+    C:/.... > mkdir project
+    C:/.... > cd project
+    
+    # git clone(프로젝트 파일을 가져온다.), 해당 프로젝트 폴더로 이동
+    C:/..../project > git clone https://github.com/pcrmcw0486/dataflood.git
+    C:/..../project > cd dataflood
+    
+    2. 가상환경 설치 - python virtualenv 사용 또는 conda 가상환경 둘 중 하나 사용
+     ① python virtualenv 사용
+        # virtualenv가 깔려 있지 않은 경우
+        C:/..../project/dataflood> pip install virtualenv
+    
+        # 가상환경 venv 생성 (python version 3.7.6 에 맞추어야함.) => (tesnsorflow를 실행하기 위해)
+        C:/..../project/dataflood> virtualenv --python=python3.7.6 venv
+        
+        # 가상환경 활성화 (in Windows)
+        C:/..../dataflood/dataflood> venv\Scripts\activate 
+        (venv) C:/..../project/dataflood>
+    
+     ② conda 가상환경
+        (venv) C:/..../project/dataflood>
+        # 가상환경 venv 생성 (python version 3.7.6 에 맞추어야함.) => (tesnsorflow를 실행하기 위해)
+        C:/..../project/dataflood> conda create -n venv python=3.7.6
+            ...
+            ...
+            Proceed ([y]/n)? y
+            
+        # 가상환경 활성화
+        C:/..../project/dataflood> conda activate venv
+    
+     
+    3. 가상환경 내에 requirements.txt 설치 ( 필요한 라이브러리들을 모아놓은 데이터 )
+       다음과 같은 명령어를 사용하여 requirements를 한번에 설치 가능
+    (venv) C:/..../project/dataflood> pip install -r requirements.txt
+    
+
+    4. 홈페이지 확인
+       # Web 폴더로 이동 후 django runserver
+    (venv) C:/..../project/dataflood> cd Web
+    (venv) C:/..../project/dataflood/Web> python manage.py runserver
+    Watching for file changes with StatReloader
+    Performing system checks...
+    
+    System check identified no issues (0 silenced).
+    September 18, 2020 - 16:19:18
+    Django version 3.0.3, using settings 'Web.settings'
+    Starting development server at http://127.0.0.1:8000/
+    Quit the server with CTRL-BREAK.
+    
+    5. ctrl + c로 django 서버 종료 후 전처리 코드 및 ML 코드보기
+    (venv) C:/..../project/dataflood/Web> cd ..
+    (venv) C:/..../project/dataflood> jupyter lab 또는 jupyter notebook
+
+URL : http://127.0.0.1:8000/
+
+# -----------------필독----------------- 
+
+**각 페이지 별로 지도 위에 있는 circle을 클릭함으로써 해당 정보를 지도에 표시**<br> <br>
+
+   - 부산지역 구단위 정보 : 왼쪽에 있는 막대 그래프 위의 각 정보를 클릭할 때 그에 관한 내용을 막대그래프로 표시
+   지도위의 circle을 누르면 각각 불투수면, 펌프비, 침수빈도를 지도위에 표시.<br> <br>
+   - Simulation 결과 보기 : 침수피해가 일어났던 2020년 7월 23일-24일 3시까지의 데이터를 이용하여 모델 시뮬레이션 결과를 추출, 
+   각 시간이 표시된 circle을 눌렀을 때, 그 시간의 침수 예상 지역을 지도에 표시<br> <br>
+   - 실시간 침수 위험도 보기 : 실시간 api를 이용하여, 현재 강우량을 받아와서 모델에 삽입하여 현재, +1, +2, +3 시간 뒤의 침수 예상 지역을 지도에 표시
